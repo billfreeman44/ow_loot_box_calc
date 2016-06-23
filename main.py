@@ -35,21 +35,32 @@ n_trials_max=1000
 
 n_heroes=21
 
-#number of skins per hero
-n_leg=4
-n_epic=2
-n_rare=4
-n_common=1
-n_sprays=25 #common
-n_emotes=3 #rare
-n_voicelines=9
-n_victoryposes=3 #rare
-n_intros=3 #epic
+###number of skins per hero
+##n_leg=4
+##n_epic=2
+##n_rare=4
+##n_common=1
+##n_sprays=25 #common
+##n_emotes=3 #rare
+##n_voicelines=9
+##n_victoryposes=3 #rare
+##n_intros=3 #epic
+##
+#### wrong?
+##total_leg=n_heroes*n_leg
+##total_epic=n_heroes*n_epic*n_intros
+##total_rare=n_heroes*n_rare*n_emotes*n_victoryposes
+##total_common=n_heroes*n_sprays*n_voicelines
 
-total_leg=n_heroes*n_leg
-total_epic=n_heroes*n_epic*n_intros
-total_rare=n_heroes*n_rare*n_emotes*n_victoryposes
-total_common=n_heroes*n_sprays*n_voicelines
+## updated values?
+total_leg=n_heroes*4
+total_epic=n_heroes*8
+total_rare=n_heroes*7
+total_common=n_heroes*35
+
+total_common=total_common + 27 #add in all hero spray
+total_rare = total_rare + 118 #add hero icons
+
 
 print total_leg
 print total_epic
@@ -76,10 +87,10 @@ leg_cost=1000
 
 boxes_needed=[]
 
-
+print "running"
 for i in range(n_trials_max):
-    if int(i/100) == 0:
-        print i
+    #if int(i/100) == 0:
+    #    print i
         
     leg_have=0.0
     epic_have=0.0
