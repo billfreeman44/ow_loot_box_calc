@@ -1,56 +1,27 @@
 
 
-print "test"
-
-
-#PLAN!
-# USE random numbers to
-#simulate loot box openings
-
-#use percentages from reddit for each rarity
-#use random numbers to decide rarity of each
-#item found.
-
-#assume item distribution is even
-#(each legendary has same chance of appearing
-#if loot box gives a legendary item)
-
-#account for duplicates
-
-#once enough money to buy remaining items, simulation stops.
-
 import random
 import numpy
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 
 #percent PER item, not per loot box. (x100)
-p_common=5866
-p_rare=3169
-p_epic=722
-p_leg=243
+p_common=5839
+p_rare=2710
+p_epic=537
+p_leg=218
+p_rare_currency=411
+p_epic_currency=243
+p_leg_currency=42
+
+print p_common+p_rare+p_epic+p_leg+p_rare_currency+p_epic_currency+p_leg_currency
+
 
 n_boxes_max=50000
-n_trials_max=3000
+n_trials_max=10000
 
-n_heroes=22
+n_heroes=21
 
-###number of skins per hero
-##n_leg=4
-##n_epic=2
-##n_rare=4
-##n_common=1
-##n_sprays=25 #common
-##n_emotes=3 #rare
-##n_voicelines=9
-##n_victoryposes=3 #rare
-##n_intros=3 #epic
-##
-#### wrong?
-##total_leg=n_heroes*n_leg
-##total_epic=n_heroes*n_epic*n_intros
-##total_rare=n_heroes*n_rare*n_emotes*n_victoryposes
-##total_common=n_heroes*n_sprays*n_voicelines
 
 
 #duplicate gold
@@ -65,7 +36,10 @@ rare_cost=75
 epic_cost=250
 leg_cost=1000
 
-
+#gold drops
+rare_gold_drop=50
+epic_gold_drop=150
+leg_gold_drop=500
 
 ## updated values?
 total_leg=n_heroes*4
@@ -90,17 +64,10 @@ print 'total cost'
 print total_cost
 
 
-#player icons
-n_p_icons=45 #rarity?
-
-
-
 boxes_needed=[]
 
 print "running"
 for i in range(n_trials_max):
-    #if int(i/100) == 0:
-    #    print i
         
     leg_have=0.0
     epic_have=0.0
@@ -114,36 +81,42 @@ for i in range(n_trials_max):
         box_number=box_number+1
         rarity_num=random.randint(0,9999)
         duplicate_chance=random.random()
+        
         if rarity_num < p_leg:
-            #print 'LEGENDARY'
-            #print leg_have/total_leg
             if leg_have/total_leg < duplicate_chance:
                 leg_have=leg_have+1
             else:
                 gold_have=gold_have+dup_leg
             
         elif rarity_num < p_leg+p_epic:
-            #print 'EPIC'
-            #print epic_have/total_epic , duplicate_chance
             if epic_have/total_epic < duplicate_chance:
                 epic_have=epic_have+1
             else:
                 gold_have=gold_have+dup_epic
                 
         elif rarity_num < p_leg+p_epic+p_rare:
-            #print 'rare'
             if rare_have/total_rare < duplicate_chance:
                 rare_have=rare_have+1
             else:
                 gold_have=gold_have+dup_rare
                 
-        #elif rarity_num < p_leg+p_epic+p_rare+p_common:
-        else:
+        elif rarity_num < p_leg+p_epic+p_rare+p_common:
             #print 'common'
             if common_have/total_common < duplicate_chance:
                 common_have=common_have+1
             else:
                 gold_have=gold_have+dup_common
+
+        elif rarity_num < p_leg+p_epic+p_rare+p_common+p_rare_currency:
+            gold_have=gold_have+rare_gold_drop
+
+        elif rarity_num < p_leg+p_epic+p_rare+p_common+p_rare_currency+p_epic_currency:
+            gold_have=gold_have+epic_gold_drop
+
+        elif rarity_num < p_leg+p_epic+p_rare+p_common+p_rare_currency+p_epic_currency+p_leg_currency:
+            gold_have=gold_have+leg_gold_drop
+
+            
         #check if we can buy the rest of the items.
         gold_needed=(total_leg - leg_have) * leg_cost
         gold_needed=gold_needed + (total_epic - epic_have) * epic_cost
