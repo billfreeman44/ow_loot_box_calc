@@ -27,6 +27,7 @@ p_leg=243
 n_boxes_max=50000
 n_trials_max=2000
 
+multiple_summer_fact=1.0
 
 # 6 leg skins, 6 epic skins
 #highlight intros = epic (3)
@@ -85,7 +86,10 @@ for i in range(n_trials_max):
 #=================== end of main loopskie
     
 boxes_needed=sorted(boxes_needed)
+boxes_needed=boxes_needed
 xarr=range(len(boxes_needed))
+
+
 
 plt.plot(xarr,boxes_needed)
 plt.ylabel('# of summer items')
@@ -99,12 +103,12 @@ plt.show()
 
 print "final statistics"
 print
-print "min: "+str(min(boxes_needed))
+print "min: "+str(min(boxes_needed)/multiple_summer_fact)
 for i in [0.01,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.99]:
     print str(i*100)+"th percentile: "+ \
-          str(boxes_needed[int(round(n_trials_max*i))])
-print "average: "+str(numpy.mean(boxes_needed))
-print "median: "+str(numpy.median(boxes_needed))
+          str(boxes_needed[int(round(n_trials_max*i))]/multiple_summer_fact)
+print "average: "+str(numpy.mean(boxes_needed)/multiple_summer_fact)
+print "median: "+str(numpy.median(boxes_needed)/multiple_summer_fact)
 #print "std dev: "+str(numpy.stdev(boxes_needed))
 
 
