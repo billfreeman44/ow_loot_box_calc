@@ -33,7 +33,7 @@ p_leg=243
 n_boxes_max=50000
 n_trials_max=3000
 
-n_heroes=22
+n_heroes=21
 
 ###number of skins per hero
 ##n_leg=4
