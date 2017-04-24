@@ -1,37 +1,43 @@
-
-
-def gaus(x,a,x0,sigma):
-    return a*exp(-(x-x0)**2/(2*sigma**2))
-
 #true if loop should end
-def endloop(item_have,item_count,need_icons,event,n_boxes_max,box_number):
+def endloop(item_have,item_count,need_icons,event,n_boxes_max,box_number,only_event_needed):
     #check box maximum
     if box_number > n_boxes_max:
         return True
+
+    money_needed=False
+    #check if you have enough money to buy everything left.
+    gold_needed = \
+                ( item_count['common'] - item_have['common'] ) * cost['common'] \
+              + ( item_count['rare'] - item_have['rare'] ) * cost['rare'] \
+              + ( item_count['epic'] - item_have['epic'] ) * cost['epic'] \
+              + ( item_count['leg'] - item_have['leg'] ) * cost['leg']
+    if event:
+        gold_needed = gold_needed \
+              + ( item_count['common-event'] - item_have['common-event'] ) * cost['common-event'] \
+              + ( item_count['rare-event'] - item_have['rare-event'] ) * cost['rare-event'] \
+              + ( item_count['epic-event'] - item_have['epic-event'] ) * cost['epic-event'] \
+              + ( item_count['leg-event'] - item_have['leg-event'] ) * cost['leg-event']
+        if only_event_needed:
+            gold_needed =  \
+                ( item_count['common-event'] - item_have['common-event'] ) * cost['common-event'] \
+              + ( item_count['rare-event'] - item_have['rare-event'] ) * cost['rare-event'] \
+              + ( item_count['epic-event'] - item_have['epic-event'] ) * cost['epic-event'] \
+              + ( item_count['leg-event'] - item_have['leg-event'] ) * cost['leg-event']
+        
+    if item_have['gold'] >= gold_needed:
+        money_needed=True
     #Check if have all icons
     if need_icons:
-        if item_have['icon'] == item_count['icon']:
+        if item_have['icon'] == item_count['icon'] or only_event_needed:
             if event:
                 if item_have['icon-event'] == item_count['icon-event']:
-                    return True
+                    if money_needed == True:
+                        return True
             else:
-                return True
-    #check if you have enough money to buy everything left.
+                if money_needed == True:
+                        return True
     else:
-        gold_needed = \
-                    ( item_count['common'] - item_have['common'] ) * cost['common'] \
-                  + ( item_count['rare'] - item_have['rare'] ) * cost['rare'] \
-                  + ( item_count['epic'] - item_have['epic'] ) * cost['epic'] \
-                  + ( item_count['leg'] - item_have['leg'] ) * cost['leg']
-        if event:
-            gold_needed = gold_needed \
-                  + ( item_count['common-event'] - item_have['common-event'] ) * cost['common-event'] \
-                  + ( item_count['rare-event'] - item_have['rare-event'] ) * cost['rare-event'] \
-                  + ( item_count['epic-event'] - item_have['epic-event'] ) * cost['epic-event'] \
-                  + ( item_count['leg-event'] - item_have['leg-event'] ) * cost['leg-event']
-        if item_have['gold'] >= gold_needed:
-            return True
-        
+        return money_needed
     return False
         
 
@@ -55,21 +61,21 @@ def add_item(rarity_chance,duplicate_chance,probabilities,item_have,item_count,e
             
     elif rarity_chance < probabilities['leg']+probabilities['epic']\
          +probabilities['rare']:
-        if float(item_have['rare'+poststr])/item_count['rare'+poststr] < duplicate_chance:
-            item_have['rare'+poststr]=item_have['rare'+poststr]+1
-        else:
-            item_have['gold']=item_have['gold']+dup_gold['rare']
-            
-    elif rarity_chance < probabilities['leg']+probabilities['epic']\
-         +probabilities['rare']+probabilities['common']:
         #check if icon
-        if random.random() < float(item_count['icon'+poststr])/(item_count['icon'+poststr]+item_count['common'+poststr]):
+        if random.random() < float(item_count['icon'+poststr])/(item_count['icon'+poststr]+item_count['rare'+poststr]):
             #check if duplicate icon
             if float(item_have['icon'+poststr])/item_count['icon'+poststr] < duplicate_chance:
                 item_have['icon'+poststr]=item_have['icon'+poststr]+1
             else:
-                item_have['gold']=item_have['gold']+dup_gold['common']
-        
+                item_have['gold']=item_have['gold']+dup_gold['rare']
+        else:
+            if float(item_have['rare'+poststr])/item_count['rare'+poststr] < duplicate_chance:
+                item_have['rare'+poststr]=item_have['rare'+poststr]+1
+            else:
+                item_have['gold']=item_have['gold']+dup_gold['rare']
+            
+    elif rarity_chance < probabilities['leg']+probabilities['epic']\
+         +probabilities['rare']+probabilities['common']:
         if float(item_have['common'+poststr])/item_count['common'+poststr] < duplicate_chance:
             item_have['common'+poststr]=item_have['common'+poststr]+1
         else:
@@ -159,8 +165,8 @@ def printinfo(levelstr,infoarr,item_count):
                 if kind != 'icons':
                     item_count['common']+=1
 
-        if event != 'none' and standardItem == 'no': ##uncomment for all items.
-        #if event == 'UPRISING_2017' and standardItem == 'no':
+        #if event != 'none' and standardItem == 'no': ##uncomment for all items.
+        if event == 'UPRISING_2017' and standardItem == 'no':
             if quality == 'epic':
                 item_count['epic-event']+=1
             if quality == 'legendary':
@@ -185,12 +191,13 @@ item_count={'common':0, 'rare':0, 'leg':0, 'epic':0, \
     'common-event':0, 'rare-event':0, 'leg-event':0, 'epic-event':0, \
     'icon':0, 'icon-event':0}
 
-   
+import json
 level=0
 linearr=[]
 #the json library refused to read this in.
 #I couldn't figure out the bug so I just did it "by hand"
 with open('items.json') as json_data:
+    #data = json.load(json_data)
     for line in json_data:
         linearr.append(line)
     
@@ -231,17 +238,30 @@ for line in linearr:
 
 
 #percent PER item, not per loot box. (x100)
-probabilities={'common':5839,'rare':2710,'epic':537,'leg':218, \
-            'rare-currency':411,'epic-currency':243,'leg-currency':42, \
+probabilities={'common':5839,'rare':2883,'epic':678,'leg':218, \
+            'rare-currency':411,'epic-currency':243,'leg-currency':46, \
+            'p-event':0.3} #30 percent
+#from https://www.reddit.com/r/Overwatch/comments/5ly5ek/the_probability_of_opening_549_loot_boxes/
+probabilities={'common':5560,'rare':2710,'epic':537,'leg':259, \
+            'rare-currency':359,'epic-currency':214,'leg-currency':42, \
+            'p-event':0.3} #30 percent
+#from https://www.reddit.com/r/Overwatch/comments/646onl/5050_to_unlock_all_items_with_less_than_1410_loot/
+probabilities={'common':5866,'rare':2741,'epic':467,'leg':189, \
+            'rare-currency':428,'epic-currency':255,'leg-currency':54, \
             'p-event':0.3} #30 percent
 
-print probabilities['common'] \
+##probabilities={'common':5839,'rare':2710,'epic':537,'leg':218, \
+##            'rare-currency':0,'epic-currency':0,'leg-currency':0, \
+##            'p-event':0.3} #30 percent
+upper_p=probabilities['common'] \
       + probabilities['rare'] \
       + probabilities['epic'] \
       + probabilities['leg'] \
       + probabilities['rare-currency'] \
       + probabilities['epic-currency'] \
       + probabilities['leg-currency'] #should add up to 10000
+
+print upper_p
 
 
 #duplicate gold
@@ -266,7 +286,7 @@ print 'Number of legendaries: '+str(item_count['leg'])
 print
 print 'Number of event commons: '+str(item_count['common-event'])
 print 'Number of event icons: '+str(item_count['icon-event'])
-print 'Number of event rared: '+str(item_count['rare-event'])
+print 'Number of event rares: '+str(item_count['rare-event'])
 print 'Number of event epic: '+str(item_count['epic-event'])
 print 'Number of event legendaries: '+str(item_count['leg-event'])
 print
@@ -310,25 +330,31 @@ need_icons=True
 #event is live
 event=True
 
+only_event_needed=True
 
-n_boxes_max=500000 #prevent bad luck.
-n_trials=5000
+n_boxes_max=6000 #prevent bad luck.
+n_trials=7000
 
 
 
 boxes_needed=[]
 print "running"
 for i in range(n_trials):
+
     #print i
     #reset vars.
     item_have={'common':0, 'rare':0, 'leg':0, 'epic':0, \
         'common-event':0, 'rare-event':0, 'leg-event':0, 'epic-event':0, \
         'icon':0, 'icon-event':0,'gold':0}
+    item_have={'common':item_count['common'], 'rare':item_count['rare'],\
+               'leg':item_count['leg'], 'epic':item_count['epic'], \
+        'common-event':0, 'rare-event':0, 'leg-event':0, 'epic-event':0, \
+        'icon':item_count['icon'], 'icon-event':0,'gold':0}
     box_number=0
-    while endloop(item_have,item_count,need_icons,event,n_boxes_max,box_number) == False:
+    while endloop(item_have,item_count,need_icons,event,n_boxes_max,box_number,only_event_needed) == False:
         #print box_number
         box_number=box_number+1
-        rarity_chance=random.randint(0,9999) #includes endpoints
+        rarity_chance=random.randint(0,upper_p-1) #includes endpoints
         duplicate_chance=random.random()
         
         item_have=add_item(rarity_chance,duplicate_chance,\
@@ -351,6 +377,11 @@ for i in range(n_trials):
 
         
     boxes_needed.append(box_number/4.0) 
+
+for index in range(len(boxes_needed)):
+    if boxes_needed[index] > 6000:
+        boxes_needed[index]=6000
+    
 
 n, bins, patches = plt.hist(boxes_needed, 50, normed=1, facecolor='green')
 
