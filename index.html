@@ -61,8 +61,8 @@ Current gold: <input type="number" id="userGold" value="0">
 <input type="radio" name="herodisplay" value="22" id="heroNum22" onclick="updateTable();"> Winston<br>
 <input type="radio" name="herodisplay" value="23" id="heroNum23" onclick="updateTable();"> Zarya<br>
 <input type="radio" name="herodisplay" value="24" id="heroNum24" onclick="updateTable();"> Zenyatta<br>
-<input type="radio" name="herodisplay" value="25" id="heroNum25" onclick="updateTable();"> All Heroes<br>
-<input type="radio" name="herodisplay" value="25" id="heroNum26" onclick="updateTable();"> All Items Ever<br>
+<input type="radio" name="herodisplay" value="25" id="heroNum25" onclick="updateTable();"> All Heroes (icons and sprays) <br>
+<input type="radio" name="herodisplay" value="25" id="heroNum26" onclick="updateTable();"> Show everything<br>
 
 </p><p id='demo3'> 
 <input type="checkbox" id="showSkins" onclick="updateTable();" checked> Show Skins <br>
@@ -168,13 +168,78 @@ function numToSpecial(num1,num2) {
 	return '-';
 }
 
+//inputs are default, achievement, itemNumber, event, have (1=have,0=want)
+function outputCheckBox(def,ach,num,eve,hav) {
+	var outstr='<input type="checkbox"';
+	//its a default item
+	if (def) {
+		if (hav) {
+		outstr+=' id="h'+num+'"';
+		} else {
+		outstr+=' id="w'+num+'"';
+		}
+		outstr+=' disabled="true" checked>';
+		return outstr;
+	}
+	
+	if (ach) {
+		if (hav) {
+		outstr+=' id="h'+num+'"';
+		outstr+=' onclick="checkMatch(\'w'+num+'\',\'h'+num+'\');">';
+		} else {
+		outstr+=' id="w'+num+'"';
+		outstr+=' disabled="true">';
+		}
+		return outstr;
+	}
+	
+	if (eve == 0 || eve == 3) {
+		if (hav) {
+		outstr+=' id="h'+num+'"';
+		outstr+=' onclick="toggleCheck(\'w'+num+'\',\'h'+num+'\');">';
+		} else {
+		outstr+=' id="w'+num+'"';
+		outstr+='>';
+		}
+		return outstr;
+	} 
+	
+	//other events
+	if (hav) {
+	outstr+=' id="h'+num+'"';
+	outstr+=' onclick="checkMatch(\'w'+num+'\',\'h'+num+'\');">';
+	} else {
+	outstr+=' id="w'+num+'"';
+	outstr+=' disabled="true">';
+	}
+	return outstr;
+
+}
+
+
+/*
+if item['default'] == 'yes':
+	hcheckstr='<input type="checkbox" id="h'+str(number)+'" disabled="true" checked>'
+	wcheckstr='<input type="checkbox" id="w'+str(number)+'" disabled="true" checked>'
+elif item['getinbox'] == 'no':
+	hcheckstr='<input type="checkbox" id="h'+str(number)+'" onclick="checkMatch(\'w'+str(number)+'\',\'h'+str(number)+'\');makeUrl();">'
+	wcheckstr='<input type="checkbox" id="w'+str(number)+'" onclick="makeUrl();" disabled="true">'
+else:
+	hcheckstr='<input type="checkbox" id="h'+str(number)+'" onclick="toggleCheck(\'w'+str(number)+'\',\'h'+str(number)+'\');makeUrl();">'
+	wcheckstr='<input type="checkbox" id="w'+str(number)+'" onclick="makeUrl();">'
+	inputs are default, achievement, itemNumber, event, have (1=have,0=want)
+outputCheckBox(def,ach,num,eve,hav)
+*/
 
 
 
 function makeRow(itemNumber) {
 	var outputstr='';
-	outputstr+="<td>"+'<input type="checkbox" id="h'+itemNumber+'">'+"</td>";
-	outputstr+="<td>"+'<input type="checkbox" id="w'+itemNumber+'">'+"</td>";
+	console.log('making row for '+itemNumber)
+	outputstr+="<td>"+outputCheckBox(itemarr[itemNumber].de,itemarr[itemNumber].ac,
+	itemNumber,itemarr[itemNumber].ev,true)+"</td>";
+	outputstr+="<td>"+outputCheckBox(itemarr[itemNumber].de,itemarr[itemNumber].ac,
+	itemNumber,itemarr[itemNumber].ev,false)+"</td>";
 	outputstr+="<td>"+numToType(itemarr[itemNumber].ty)+"</td>";
 	outputstr+="<td>"+itemarr[itemNumber].na+"</td>";
 	outputstr+="<td>"+numToRarity(itemarr[itemNumber].ra)+"</td>";
