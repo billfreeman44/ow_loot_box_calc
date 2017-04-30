@@ -244,6 +244,6 @@ f.write('''
 
 ''')
 
-f.write('itemarr=['+objectstr[:-1]+']') #remove trailing comma
+f.write('var itemarr=['+objectstr[:-1]+'];') #remove trailing comma
 f.close()
 
