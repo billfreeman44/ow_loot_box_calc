@@ -18,6 +18,7 @@ table {
 }
 table, th, td {
    border: 1px solid black;
+	font-size:16px;
 }
 tr:hover {background-color: #f5f5f5}
 
@@ -28,7 +29,7 @@ padding-right:30px;
 
 body {
 font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-font-size:20px;
+font-size:16px;
 line-height:1.42857143;
 color:#333;
 background-color:#fff;
@@ -102,7 +103,7 @@ Current gold: <input type="number" id="userGold" value="0">
 <input type="checkbox" id="showIcons" onclick="updateTable();"> Show Icons <br>
 <br>
 
-<input type="checkbox" id="showNormals" onclick="updateTable();" checked> Show Non-event items <br>
+<input type="checkbox" id="showNonEvent" onclick="updateTable();" checked> Show Non-event items <br>
 <input type="checkbox" id="showUprising" onclick="updateTable();" checked> Show Uprising <br>
 <input type="checkbox" id="showEvents" onclick="updateTable();"> Show Other events <br>
 
@@ -111,6 +112,7 @@ Current gold: <input type="number" id="userGold" value="0">
 <input type="checkbox" id="showAchievement" onclick="updateTable();"> Show Achievement items <br>
 <input type="checkbox" id="showBlizzcon" onclick="updateTable();"> Show Items from Blizzcon <br>
 <input type="checkbox" id="showDefaultItems" onclick="updateTable();"> Show Default items <br>
+<input type="checkbox" id="showNormals" onclick="updateTable();" checked> Show Normal items <br>
 
 </p>
 
@@ -332,7 +334,7 @@ function showEvent(i) {
 	if (eventstr != '-' && eventstr != 'Uprising-17' && document.getElementById('showEvents').checked == true) {
 		return true;
 	}
-	if (eventstr == '-' && document.getElementById('showNormals').checked == true) {
+	if (eventstr == '-' && document.getElementById('showNonEvent').checked == true) {
 		return true;
 	}
 	return false;
@@ -341,16 +343,21 @@ function showEvent(i) {
 //return true if item should be shown based on its achievement or blizcon or default
 function showSpecial(i) {
 	var specialstr=numToSpecial(itemarr[i].ac,itemarr[i].de);
-	if (specialstr == 'Blizzcon' && document.getElementById('showBlizzcon').checked == false) {
-		return false;
+	if (specialstr == 'Blizzcon' && document.getElementById('showBlizzcon').checked == true) {
+		return true;
 	}
-	if (specialstr == 'Achievement' && document.getElementById('showAchievement').checked == false) {
-		return false;
+	if (specialstr == 'Achievement' && document.getElementById('showAchievement').checked == true) {
+		return true;
 	}
-	if (specialstr == 'Default' && document.getElementById('showDefaultItems').checked == false) {
-		return false;
+	if (specialstr == 'Default' && document.getElementById('showDefaultItems').checked == true) {
+		return true;
 	}
-	return true;
+	if (specialstr == '-' && document.getElementById('showNormals').checked == true) {
+		return true;
+	}
+	
+	
+	return false;
 }
 
 

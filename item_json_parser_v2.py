@@ -64,8 +64,8 @@ def addinfo(itemdic,arr):
         itemdic['na']=arr[4]
     if arr[3] == 'quality':
         itemdic['ra']=rarityToNum(arr[4])
-#    if arr[3] == 'id': ##fuck id. using a number instead...
-#        itemdic['id']=arr[4]
+    if arr[3] == 'id': ##copy over id from that websit https://js41637.github.io/Overwatch-Item-Tracker/
+        itemdic['jid']=arr[4]
     if arr[3] == 'event':
         itemdic['ev']=eventToNum(arr[4])
     if arr[3] == 'achievement':
@@ -149,7 +149,7 @@ itemtemplate={'he':0,'ty':0,\
               'ac':0,'co':0,\
               'id':0,\
               'na':'idk',\
-                 'de':0,'ck':0}
+                 'de':0,'ck':0,'jid':'str'}
 itemdic=itemtemplate
 itemlist=[]
 counter=1
@@ -174,7 +174,7 @@ for line in f:
               'ac':0,'co':0,\
               'id':0,\
               'na':'idk',\
-                 'de':0,'ck':0}
+                 'de':0,'ck':0,'jid':'str'}
 ## 'he' - hero heroToNum('all')
 ## 'ty' - type typeToNum('icons')
 ## 'ra' - rarity rarityToNum('common'
