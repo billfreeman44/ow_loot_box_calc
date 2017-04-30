@@ -553,12 +553,12 @@
           "hero": "junkrat"
         },
         {
-          "name": "Kambô",
+          "name": "Kambo",
           "id": "lucio-kambo",
           "hero": "lucio"
         },
         {
-          "name": "K?f? Aromo",
+          "name": "Kofi Aromo",
           "id": "kofi-aromo"
         },
         {
@@ -622,7 +622,7 @@
           "hero": "winston"
         },
         {
-          "name": "Lúcio",
+          "name": "Lucio",
           "id": "lucio-lucio",
           "hero": "lucio"
         },
@@ -1169,7 +1169,7 @@
           "group": "competitive"
         },
         {
-          "name": "Torbjörn",
+          "name": "Torbjorn",
           "id": "torbjorn-torbjorn",
           "hero": "torbjorn"
         },
@@ -1409,7 +1409,7 @@
           "group": "diablo"
         },
         {
-          "name": "Día de los Muertos",
+          "name": "Dia de los Muertos",
           "id": "da-de-los-muertos",
           "standardItem": "true"
         },
@@ -1455,7 +1455,7 @@
           "standardItem": "true"
         },
         {
-          "name": "Lumérico",
+          "name": "Lumerico",
           "id": "lumerico",
           "quality": "common"
         },
@@ -1507,7 +1507,7 @@
           "group": "pachi"
         },
         {
-          "name": "Piñata",
+          "name": "Pinata",
           "id": "piata",
           "achievement": "true",
           "group": "diablo"
@@ -3930,8 +3930,8 @@
           "quality": "epic"
         },
         {
-          "name": "My Aim Is "true"",
-          "id": "hanzo-my-aim-is-"true"",
+          "name": "My Aim Is True",
+          "id": "hanzo-my-aim-is-true",
           "quality": "epic"
         },
         {
@@ -4564,7 +4564,7 @@
           "event": "HALLOWEEN_2016"
         },
         {
-          "name": "'WINTER'",
+          "name": "\"WINTER\"",
           "id": "junkrat-winter",
           "quality": "common",
           "event": "WINTER_WONDERLAND_2016"
@@ -4738,7 +4738,7 @@
     }
   },
   "lucio": {
-    "name": "Lúcio",
+    "name": "Lucio",
     "id": "lucio",
     "class": "Support",
     "colors": {
@@ -4810,7 +4810,7 @@
           "quality": "legendary"
         },
         {
-          "name": "Seleção",
+          "name": "Selecao",
           "id": "lucio-selecao",
           "quality": "legendary",
           "event": "SUMMER_GAMES_2016"
@@ -4897,12 +4897,12 @@
           "hero": "lucio"
         },
         {
-          "name": "Kambô",
+          "name": "Kambo",
           "id": "lucio-kambo",
           "hero": "lucio"
         },
         {
-          "name": "Lúcio",
+          "name": "Lucio",
           "id": "lucio-lucio",
           "hero": "lucio"
         },
@@ -4975,7 +4975,7 @@
           "quality": "common"
         },
         {
-          "name": "Kambô",
+          "name": "Kambo",
           "id": "lucio-kambo",
           "quality": "common"
         },
@@ -6252,7 +6252,7 @@
           "quality": "legendary"
         },
         {
-          "name": "Sigrún",
+          "name": "Sigrun",
           "id": "mercy-sigrun",
           "quality": "legendary"
         },
@@ -8620,7 +8620,7 @@
           "quality": "epic"
         },
         {
-          "name": "Say 'Cheese'",
+          "name": "Say \"Cheese\"",
           "id": "roadhog-say-cheese",
           "quality": "epic"
         },
@@ -8800,7 +8800,7 @@
           "event": "HALLOWEEN_2016"
         },
         {
-          "name": "'Winter'",
+          "name": "\"Winter\"",
           "id": "roadhog-winter",
           "quality": "common",
           "event": "WINTER_WONDERLAND_2016"
@@ -8885,7 +8885,7 @@
           "quality": "common"
         },
         {
-          "name": "Say 'bacon...'",
+          "name": "Say \"bacon...\"",
           "id": "roadhog-say-bacon",
           "quality": "common"
         },
@@ -9352,7 +9352,7 @@
           "quality": "common"
         },
         {
-          "name": "That's 'sir' to you",
+          "name": "That's \"sir\" to you",
           "id": "soldier-76-thats-sir-to-you",
           "quality": "common"
         },
@@ -9509,7 +9509,7 @@
           "quality": "legendary"
         },
         {
-          "name": "Azúcar",
+          "name": "Azucar",
           "id": "sombra-azucar",
           "quality": "legendary"
         },
@@ -9714,7 +9714,7 @@
           "quality": "common"
         },
         {
-          "name": "¿Quién?",
+          "name": "?Quien?",
           "id": "sombra-quien",
           "quality": "common"
         },
@@ -10352,7 +10352,7 @@
     }
   },
   "torbjorn": {
-    "name": "Torbjörn",
+    "name": "Torbjorn",
     "id": "torbjorn",
     "class": "Defence",
     "colors": {
@@ -10368,7 +10368,7 @@
           "standardItem": "true"
         },
         {
-          "name": "Blå",
+          "name": "Bla",
           "id": "torbjorn-bla",
           "quality": "rare"
         },
@@ -10378,7 +10378,7 @@
           "quality": "rare"
         },
         {
-          "name": "Grön",
+          "name": "Gron",
           "id": "torbjorn-gron",
           "quality": "rare"
         },
@@ -10516,7 +10516,7 @@
           "hero": "torbjorn"
         },
         {
-          "name": "Torbjörn",
+          "name": "Torbjorn",
           "id": "torbjorn-torbjorn",
           "hero": "torbjorn"
         },
@@ -10631,7 +10631,7 @@
           "quality": "common"
         },
         {
-          "name": "Smält",
+          "name": "Smalt",
           "id": "torbjorn-smalt",
           "quality": "common"
         },
@@ -11247,7 +11247,7 @@
           "quality": "common"
         },
         {
-          "name": "déjà vu",
+          "name": "deja vu",
           "id": "tracer-deja-vu",
           "quality": "common"
         },
@@ -11724,7 +11724,7 @@
           "quality": "common"
         },
         {
-          "name": "Ouh là là",
+          "name": "Ouh la la",
           "id": "widowmaker-ouh-la-la",
           "quality": "common"
         },

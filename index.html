@@ -1,0 +1,364 @@
+
+<!DOCTYPE HTML PUBLIC> 
+<html lang="en"> 
+<head> 
+<script src="sorttable.js"></script>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+<title>Item table for Overwatch</title> 
+<style>
+td {
+padding-left: 3px;
+padding-right: 7px;
+padding-top: 3px;
+padding-bottom: 2px;
+}
+table {
+    border-collapse: collapse;
+}
+table, th, td {
+   border: 1px solid black;
+}
+tr:hover {background-color: #f5f5f5}
+
+table th
+{
+padding-right:30px;
+}
+
+</style>
+</head> 
+<body> 
+
+<p>This is an item table for overwatch.</p> 
+<p id='goldbox'> 
+
+Current gold: <input type="number" id="userGold" value="0">
+
+</p><p id='RADIOS' style="column-count: 3"> 
+
+<input type="radio" name="herodisplay" value="1" id="heroNum1" onclick="updateTable();" checked> Ana<br>
+<input type="radio" name="herodisplay" value="2" id="heroNum2" onclick="updateTable();"> Bastion<br>
+<input type="radio" name="herodisplay" value="3" id="heroNum3" onclick="updateTable();"> Dva<br>
+<input type="radio" name="herodisplay" value="4" id="heroNum4" onclick="updateTable();"> Genji<br>
+<input type="radio" name="herodisplay" value="5" id="heroNum5" onclick="updateTable();"> Hanzo<br>
+<input type="radio" name="herodisplay" value="6" id="heroNum6" onclick="updateTable();"> Junkrat<br>
+<input type="radio" name="herodisplay" value="7" id="heroNum7" onclick="updateTable();"> Lucio<br>
+<input type="radio" name="herodisplay" value="8" id="heroNum8" onclick="updateTable();"> Mccree<br>
+<input type="radio" name="herodisplay" value="9" id="heroNum9" onclick="updateTable();"> Mei<br>
+<input type="radio" name="herodisplay" value="10" id="heroNum10" onclick="updateTable();"> Mercy<br>
+<input type="radio" name="herodisplay" value="11" id="heroNum11" onclick="updateTable();"> Orisa<br>
+<input type="radio" name="herodisplay" value="12" id="heroNum12" onclick="updateTable();"> Pharah<br>
+<input type="radio" name="herodisplay" value="13" id="heroNum13" onclick="updateTable();"> Reaper<br>
+<input type="radio" name="herodisplay" value="14" id="heroNum14" onclick="updateTable();"> Reinhardt<br>
+<input type="radio" name="herodisplay" value="15" id="heroNum15" onclick="updateTable();"> Roadhog<br>
+<input type="radio" name="herodisplay" value="16" id="heroNum16" onclick="updateTable();"> Soldier-76<br>
+<input type="radio" name="herodisplay" value="17" id="heroNum17" onclick="updateTable();"> Sombra<br>
+<input type="radio" name="herodisplay" value="18" id="heroNum18" onclick="updateTable();"> Symmetra<br>
+<input type="radio" name="herodisplay" value="19" id="heroNum19" onclick="updateTable();"> Torbjorn<br>
+<input type="radio" name="herodisplay" value="20" id="heroNum20" onclick="updateTable();"> Tracer<br>
+<input type="radio" name="herodisplay" value="21" id="heroNum21" onclick="updateTable();"> Widowmaker<br>
+<input type="radio" name="herodisplay" value="22" id="heroNum22" onclick="updateTable();"> Winston<br>
+<input type="radio" name="herodisplay" value="23" id="heroNum23" onclick="updateTable();"> Zarya<br>
+<input type="radio" name="herodisplay" value="24" id="heroNum24" onclick="updateTable();"> Zenyatta<br>
+<input type="radio" name="herodisplay" value="25" id="heroNum25" onclick="updateTable();"> All Heroes<br>
+<input type="radio" name="herodisplay" value="25" id="heroNum26" onclick="updateTable();"> All Items Ever<br>
+
+</p><p id='demo3'> 
+<input type="checkbox" id="showSkins" onclick="updateTable();" checked> Show Skins <br>
+<input type="checkbox" id="showEmotes" onclick="updateTable();" checked> Show Emotes <br>
+<input type="checkbox" id="showIntros" onclick="updateTable();" checked> Show Highlight Intros <br>
+<input type="checkbox" id="showPoses" onclick="updateTable();" checked> Show Victory Poses <br>
+<input type="checkbox" id="showVoices" onclick="updateTable();" checked> Show Voice Lines <br>
+<input type="checkbox" id="showSprays" onclick="updateTable();"> Show Sprays <br>
+<input type="checkbox" id="showIcons" onclick="updateTable();"> Show Icons <br>
+<br>
+
+<input type="checkbox" id="showNormals" onclick="updateTable();" checked> Show Non-event items <br>
+<input type="checkbox" id="showUprising" onclick="updateTable();" checked> Show Uprising <br>
+<input type="checkbox" id="showEvents" onclick="updateTable();"> Show Other events <br>
+
+<br>
+
+<input type="checkbox" id="showAchievement" onclick="updateTable();"> Show Achievement items <br>
+<input type="checkbox" id="showBlizzcon" onclick="updateTable();"> Show Items from Blizzcon <br>
+<input type="checkbox" id="showDefaultItems" onclick="updateTable();"> Show Default items <br>
+
+</p>
+
+<button onclick="getItem()">Try it</button>
+
+<div id="myDiv"></div>
+
+<script src="item_output.js"></script>
+<script>
+//table display and selection functions!
+
+//stuff for checkboxes
+//keeps same as checked and disables button
+function toggleCheck(checkId,thisId) {
+    document.getElementById(checkId).checked = document.getElementById(thisId).checked;
+    document.getElementById(checkId).disabled = document.getElementById(thisId).checked;
+}
+
+//keeps same as checked and does not disable button
+function checkMatch(checkId,thisId) {
+    document.getElementById(checkId).checked = document.getElementById(thisId).checked;
+}
+
+
+
+
+
+/*
+
+<th>Have it</th>
+<th>Want it</th>
+<th>Name</th>
+<th>Hero</th>
+<th>Type</th>
+<th>Rarity</th>
+<th>Event</th>
+<th>Special</th>
+<th>Cost</th>
+
+
+*/
+
+function numToRarity(num) {
+	if (num == 0){return '-';}
+	var rarities=['common','rare','epic','legendary'];
+	return rarities[num-1];
+
+}
+
+function numToType(num) {
+	var types=['icons','sprays','skins','emotes','intros','voicelines','poses'];
+	return types[num-1];
+}
+function numToEvent(num) {
+	if (num == 0){return '-';}
+	var events=['Halloween-16','Summer-16','Uprising-17','Winter-16','Rooster-17'];
+	return events[num-1]
+}
+function numToHero(num) {
+	var heroes=['ana','bastion','dva','genji',
+            'hanzo','junkrat','lucio','mccree',
+            'mei','mercy','orisa','pharah','reaper',
+            'reinhardt','roadhog','soldier-76','sombra',
+            'symmetra','torbjorn','tracer','widowmaker',
+            'winston','zarya','zenyatta','all'];
+	return heroes[num-1];
+	
+	
+}
+
+//num 1 = achivement (1 achievement, 2 blizzcon)
+//2 = is default bool
+function numToSpecial(num1,num2) {
+	if (num1 == 1) {
+	return 'Achievement';
+	}
+	if (num1 == 2) {
+	return 'Blizzcon';
+	}
+	if (num2 == 1) {
+	return 'Default';
+	}
+	return '-';
+}
+
+
+
+
+function makeRow(itemNumber) {
+	var outputstr='';
+	outputstr+="<td>"+'<input type="checkbox" id="h'+itemNumber+'">'+"</td>";
+	outputstr+="<td>"+'<input type="checkbox" id="w'+itemNumber+'">'+"</td>";
+	outputstr+="<td>"+numToType(itemarr[itemNumber].ty)+"</td>";
+	outputstr+="<td>"+itemarr[itemNumber].na+"</td>";
+	outputstr+="<td>"+numToRarity(itemarr[itemNumber].ra)+"</td>";
+	outputstr+="<td>"+numToEvent(itemarr[itemNumber].ev)+"</td>";
+	outputstr+="<td>"+numToSpecial(itemarr[itemNumber].ac,itemarr[itemNumber].de)+"</td>";
+	outputstr+="<td>"+itemarr[itemNumber].co+"</td>";
+	outputstr+="<td>"+numToHero(itemarr[itemNumber].he)+"</td>";
+	return outputstr;
+}
+
+
+
+
+
+function heroSelected() {
+	for (var i=1;i<27;i++) {
+		console.log(i);
+		if (document.getElementById('heroNum'+i).checked == true) {
+		return i;
+		}
+	}
+	console.log('there was an invalid hero selected... defaulting to displaying ana!');
+	return 1; //error!!
+}
+
+
+
+
+//return true if item should be shown based on its type
+function showItemType(i) {
+	var typestr=numToType(itemarr[i].ty);
+	if (typestr == 'icons' && document.getElementById('showIcons').checked == true) {
+		return true;
+	}
+	if (typestr == 'sprays' && document.getElementById('showSprays').checked == true) {
+		return true;
+	}
+	if (typestr == 'skins' && document.getElementById('showSkins').checked == true) {
+		return true;
+	}
+	if (typestr == 'emotes' && document.getElementById('showEmotes').checked == true) {
+		return true;
+	}
+	if (typestr == 'intros' && document.getElementById('showIntros').checked == true) {
+		return true;
+	}
+	if (typestr == 'voicelines' && document.getElementById('showVoices').checked == true) {
+		return true;
+	}
+	if (typestr == 'poses' && document.getElementById('showPoses').checked == true) {
+		return true;
+	}
+	return false;
+}
+
+//return true if item should be shown based on its event
+function showEvent(i) {
+	var eventstr=numToEvent(itemarr[i].ev);
+	if (eventstr == 'Uprising-17' && document.getElementById('showUprising').checked == true) {
+		return true;
+	}
+	if (eventstr != '-' && eventstr != 'Uprising-17' && document.getElementById('showEvents').checked == true) {
+		return true;
+	}
+	if (eventstr == '-' && document.getElementById('showNormals').checked == true) {
+		return true;
+	}
+	return false;
+}
+
+//return true if item should be shown based on its achievement or blizcon or default
+function showSpecial(i) {
+	var specialstr=numToSpecial(itemarr[i].ac,itemarr[i].de);
+	if (specialstr == 'Blizzcon' && document.getElementById('showBlizzcon').checked == false) {
+		return false;
+	}
+	if (specialstr == 'Achievement' && document.getElementById('showAchievement').checked == false) {
+		return false;
+	}
+	if (specialstr == 'Default' && document.getElementById('showDefaultItems').checked == false) {
+		return false;
+	}
+	return true;
+}
+
+
+
+
+var n_items=itemarr.length;
+
+function updateTable() {
+	var outputstr='';
+	var i=0;
+	var displayHeroId=heroSelected();
+	console.log('hero selected id is '+displayHeroId);
+	
+	for (i=0;i<n_items;i++) {
+		if (displayHeroId ==  itemarr[i].he || displayHeroId == 26) {
+			if (showItemType(i) && showEvent(i) && showSpecial(i)){
+				outputstr+='<tr>'+makeRow(i) +'</tr>';
+			}
+		}
+	
+	}
+	
+	
+	
+	document.getElementById("tableBody").innerHTML =outputstr;
+
+}
+
+</script>
+
+
+
+
+<script>
+//simulation functions!
+
+//return random integer including entpoints
+function intBetween(bot,top){
+	return Math.floor(Math.random() * (top - bot + 1) + bot);
+}
+
+var probabilities={'common':5866,'rare':2741,'epic':467,'leg':189, 
+            'rare-currency':428,'epic-currency':255,'leg-currency':54, 
+            'p-event':0.3};
+			
+var probAdj={'common':5866,'rare':2741,'epic':467,'leg':189, 
+            'rare-currency':428,'epic-currency':255,'leg-currency':54, 
+            'p-event':0.3};
+			
+probAdj['rare']=probAdj['rare']+probAdj['common'];
+probAdj['epic']=probAdj['epic']+probAdj['rare'];
+probAdj['leg']=probAdj['leg']+probAdj['epic'];
+probAdj['rare-currency']=probAdj['rare-currency']+probAdj['leg'];
+probAdj['epic-currency']=probAdj['epic-currency']+probAdj['rare-currency'];
+probAdj['leg-currency']=probAdj['leg-currency']+probAdj['epic-currency'];
+
+
+function getItem(){
+	var rand = intBetween(1,probAdj['epic-currency']);
+	var items=['common','rare','epic','leg','rare-currency','epic-currency','leg-currency'];
+	for (var i=0; i<items.length;i++){
+		if (rand < probAdj[items[i]]){
+			document.getElementById("demo3").innerHTML = items[i];
+			return
+		} 
+	}
+	document.getElementById("demo3").innerHTML = 'ERROR';
+	return	
+}
+
+
+
+
+
+
+</script>
+
+
+
+<p>
+<table class="sortable" id="withsymbolsbeforesorting"><thead><tr>
+<th>Have it</th>
+<th>Want it</th>
+<th>Type</th>
+<th>Name</th>
+<th>Rarity</th>
+<th>Event</th>
+<th>Special</th>
+<th>Cost</th>
+<th>Hero</th>
+</tr></thead>
+<tbody id="tableBody">
+
+</tbody>
+<tfoot>
+</tfoot>
+</table>
+</p>
+<script>
+updateTable(); //initially create a table w/ ana's items!
+</script>
+</body> 
+</html>
+
