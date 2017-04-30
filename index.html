@@ -26,6 +26,34 @@ table th
 padding-right:30px;
 }
 
+body {
+font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+font-size:20px;
+line-height:1.42857143;
+color:#333;
+background-color:#fff;
+}
+
+.common  {
+color: #3a3a3a ;
+
+}
+
+.rare {
+color: #27dcf4 ;
+
+}
+.epic  {
+color: #f426f0 ;
+
+}
+
+.legendary  {
+color: #f4af25 ;
+
+}
+
+
 </style>
 </head> 
 <body> 
@@ -241,7 +269,7 @@ function makeRow(itemNumber) {
 	outputstr+="<td>"+outputCheckBox(itemarr[itemNumber].de,itemarr[itemNumber].ac,
 	itemNumber,itemarr[itemNumber].ev,false)+"</td>";
 	outputstr+="<td>"+numToType(itemarr[itemNumber].ty)+"</td>";
-	outputstr+="<td>"+itemarr[itemNumber].na+"</td>";
+	outputstr+="<td class='"+numToRarity(itemarr[itemNumber].ra)+"'>"+itemarr[itemNumber].na+"</td>";
 	outputstr+="<td>"+numToRarity(itemarr[itemNumber].ra)+"</td>";
 	outputstr+="<td>"+numToEvent(itemarr[itemNumber].ev)+"</td>";
 	outputstr+="<td>"+numToSpecial(itemarr[itemNumber].ac,itemarr[itemNumber].de)+"</td>";
