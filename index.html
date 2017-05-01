@@ -116,7 +116,8 @@ Current gold: <input type="number" id="userGold" value="0">
 
 </p>
 <p id='testGetItem'> </p>
-<button onclick="buttonPush()">Try it</button>
+<button onclick="buttonPush()">Get an item bro</button><br><br>
+<button onclick="clearCookie()">Clear Cookie</button><br><br>
 
 <p id='urlArea'> url area </p>
 <div id="myDiv"></div>
@@ -477,6 +478,10 @@ function setCookie(cname, cvalue, exdays) {
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     var expires = "expires="+d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function clearCookie(){
+	setCookie('none', 'none', -1);
 }
 
 function getCookie(cname) {
