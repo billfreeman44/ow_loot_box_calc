@@ -166,7 +166,7 @@ for line in f:
         else:
             itemdic=apply_defaults(itemdic)
             itemdic['id']=counter
-            print itemdic
+            #print itemdic
             itemlist.append(itemdic)
             counter+=1
         itemdic={'he':0,'ty':0,\
@@ -174,7 +174,7 @@ for line in f:
               'ac':0,'co':0,\
               'id':0,\
               'na':'idk',\
-                 'de':0,'ck':0,'jid':'str'}
+              'de':0,'ck':0,'jid':'str'}
 ## 'he' - hero heroToNum('all')
 ## 'ty' - type typeToNum('icons')
 ## 'ra' - rarity rarityToNum('common'
@@ -202,9 +202,59 @@ itemlist.reverse()
 itemlist.sort(key=operator.itemgetter('ty'))
 itemlist.sort(key=operator.itemgetter('he'))
 
+#renumber objects
+for i in range(len(itemlist)):
+    itemlist[i]['id']=i
+
+#list out possible objects you could get
+commonarr=[]
+for i in range(len(itemlist)):
+    if itemlist[i]['ty']!=typeToNum('icons') and  \
+       itemlist[i]['ev']==0 and \
+       itemlist[i]['ac']==0 and \
+       itemlist[i]['ra']==rarityToNum('common'):
+        commonarr.append(i)
+rarearr=[]
+for i in range(len(itemlist)):
+    if (itemlist[i]['ev']==0 and \
+       itemlist[i]['ac']==0 and \
+       itemlist[i]['ra']==rarityToNum('rare')) or itemlist[i]['ty']==typeToNum('icons'):
+        rarearr.append(i)
+epicarr=[]
+for i in range(len(itemlist)):
+    if itemlist[i]['ty']!=typeToNum('icons') and  \
+       itemlist[i]['ev']==0 and \
+       itemlist[i]['ac']==0 and \
+       itemlist[i]['ra']==rarityToNum('epic'):
+        epicarr.append(i)
+legarr=[]
+for i in range(len(itemlist)):
+    if itemlist[i]['ty']!=typeToNum('icons') and  \
+       itemlist[i]['ev']==0 and \
+       itemlist[i]['ac']==0 and \
+       itemlist[i]['ra']==rarityToNum('legendary'):
+        legarr.append(i)
+
 objectstr=''
 for idd in itemlist:
     objectstr+=''+str(idd)+','
+
+commonstr=''
+for idd in commonarr:
+    commonstr+=''+str(idd)+','
+
+rarestr=''
+for idd in rarearr:
+    rarestr+=''+str(idd)+','
+
+epicstr=''
+for idd in epicarr:
+    epicstr+=''+str(idd)+','
+
+legstr=''
+for idd in legarr:
+    legstr+=''+str(idd)+','
+
 
 f.close()
 
@@ -245,5 +295,26 @@ f.write('''
 ''')
 
 f.write('var itemarr=['+objectstr[:-1]+'];') #remove trailing comma
+
+f.write('''
+
+
+var commonbox=['''+commonstr[:-1]+'''];
+
+
+
+var rarebox=['''+rarestr[:-1]+'''];
+
+
+
+var epicbox=['''+epicstr[:-1]+'''];
+
+
+
+var legbox=['''+legstr[:-1]+'''];
+
+
+''')
+
 f.close()
 

@@ -115,8 +115,8 @@ Current gold: <input type="number" id="userGold" value="0">
 <input type="checkbox" id="showNormals" onclick="updateTable();" checked> Show Normal items <br>
 
 </p>
-
-<button onclick="getItem()">Try it</button>
+<p id='testGetItem'> </p>
+<button onclick="buttonPush()">Try it</button>
 
 <div id="myDiv"></div>
 
@@ -136,24 +136,9 @@ function checkMatch(checkId,thisId) {
     document.getElementById(checkId).checked = document.getElementById(thisId).checked;
 }
 
-
-
-
-
-/*
-
-<th>Have it</th>
-<th>Want it</th>
-<th>Name</th>
-<th>Hero</th>
-<th>Type</th>
-<th>Rarity</th>
-<th>Event</th>
-<th>Special</th>
-<th>Cost</th>
-
-
-*/
+function addCheckItemArr(num,code){
+	itemarr[num].ck=code;
+}
 
 function numToRarity(num) {
 	if (num == 0){return '-';}
@@ -163,24 +148,21 @@ function numToRarity(num) {
 }
 
 function numToType(num) {
-	var types=['icons','sprays','skins','emotes','intros','voicelines','poses'];
-	return types[num-1];
+	var types=['unknown','icons','sprays','skins','emotes','intros','voicelines','poses'];
+	return types[num];
 }
 function numToEvent(num) {
-	if (num == 0){return '-';}
-	var events=['Halloween-16','Summer-16','Uprising-17','Winter-16','Rooster-17'];
-	return events[num-1]
+	var events=['-','Halloween-16','Summer-16','Uprising-17','Winter-16','Rooster-17'];
+	return events[num]
 }
 function numToHero(num) {
-	var heroes=['ana','bastion','dva','genji',
+	var heroes=['error','ana','bastion','dva','genji',
             'hanzo','junkrat','lucio','mccree',
             'mei','mercy','orisa','pharah','reaper',
             'reinhardt','roadhog','soldier-76','sombra',
             'symmetra','torbjorn','tracer','widowmaker',
             'winston','zarya','zenyatta','all'];
-	return heroes[num-1];
-	
-	
+	return heroes[num];
 }
 
 //num 1 = achivement (1 achievement, 2 blizzcon)
@@ -212,35 +194,73 @@ function outputCheckBox(def,ach,num,eve,hav) {
 		return outstr;
 	}
 	
+	//its from an achievement
 	if (ach) {
 		if (hav) {
-		outstr+=' id="h'+num+'"';
-		outstr+=' onclick="checkMatch(\'w'+num+'\',\'h'+num+'\');">';
+			outstr+=' id="h'+num+'"';
+			outstr+=' onclick="checkMatch(\'w'+num+'\',\'h'+num+'\');"';
+			if (itemarr[num].ck == 1) {
+				outstr+=' checked>';
+			} else {
+				outstr+='>';
+			}
 		} else {
-		outstr+=' id="w'+num+'"';
-		outstr+=' disabled="true">';
+			outstr+=' id="w'+num+'"';
+			outstr+=' disabled="true"'; 
+			
+			if (itemarr[num].ck == 1) {
+				outstr+=' checked>';
+			} else {
+				outstr+='>';
+			}
 		}
 		return outstr;
 	}
 	
+	//normal item
 	if (eve == 0 || eve == 3) {
 		if (hav) {
-		outstr+=' id="h'+num+'"';
-		outstr+=' onclick="toggleCheck(\'w'+num+'\',\'h'+num+'\');">';
+			outstr+=' id="h'+num+'"';
+			outstr+=' onclick="toggleCheck(\'w'+num+'\',\'h'+num+'\');addCheckItemArr('+num+',1)"';
+			if (itemarr[num].ck == 1) {
+				outstr+=' checked>';
+			} else {
+				outstr+='>';
+			}
 		} else {
-		outstr+=' id="w'+num+'"';
-		outstr+='>';
-		}
-		return outstr;
+			outstr+=' id="w'+num+'" onclick="addCheckItemArr('+num+',2)"';
+			if (itemarr[num].ck == 1) {
+				outstr+=' disabled="true" checked>';
+			} else { 
+				if ( itemarr[num].ck == 2){
+					outstr+=' checked>';
+					} else {
+						outstr+='>';
+					}
+				}
+			}
+			return outstr;
 	} 
 	
 	//other events
 	if (hav) {
-	outstr+=' id="h'+num+'"';
-	outstr+=' onclick="checkMatch(\'w'+num+'\',\'h'+num+'\');">';
+		outstr+=' id="h'+num+'"';
+		outstr+=' onclick="checkMatch(\'w'+num+'\',\'h'+num+'\');"';
+		if (itemarr[num].ck == 1) {
+			outstr+=' checked>';
+		} else {
+			outstr+='>';
+		}
+	
 	} else {
-	outstr+=' id="w'+num+'"';
-	outstr+=' disabled="true">';
+		outstr+=' id="w'+num+'"';
+		outstr+=' disabled="true"';
+		if (itemarr[num].ck == 1 || itemarr[num].ck == 2) {
+			outstr+=' checked>';
+		} else {
+			outstr+='>';
+		}
+	
 	}
 	return outstr;
 
@@ -415,20 +435,45 @@ probAdj['epic-currency']=probAdj['epic-currency']+probAdj['rare-currency'];
 probAdj['leg-currency']=probAdj['leg-currency']+probAdj['epic-currency'];
 
 
-function getItem(){
+function getNewItemNumber(rarity){
+	if (rarity == 'common') {
+		return commonbox[intBetween(0,commonbox.length-1)]
+	}
+	if (rarity == 'rare') {
+		return rarebox[intBetween(0,rarebox.length-1)]
+	}
+	if (rarity == 'epic') {
+		return epicbox[intBetween(0,epicbox.length-1)]
+	}
+	if (rarity == 'leg') {
+		return legbox[intBetween(0,legbox.length-1)]
+	}
+	
+
+}
+
+
+function getNewItemRarity(){
 	var rand = intBetween(1,probAdj['epic-currency']);
 	var items=['common','rare','epic','leg','rare-currency','epic-currency','leg-currency'];
 	for (var i=0; i<items.length;i++){
 		if (rand < probAdj[items[i]]){
-			document.getElementById("demo3").innerHTML = items[i];
-			return
+			return items[i];
 		} 
 	}
-	document.getElementById("demo3").innerHTML = 'ERROR';
-	return	
+	return 'err';
 }
 
-
+function buttonPush(){
+	var rarity=getNewItemRarity();
+	var itemNumber=-1; 
+	if (rarity == 'common' || rarity == 'rare' || rarity == 'epic' || rarity == 'leg') {
+		itemNumber=getNewItemNumber(rarity);
+		document.getElementById("testGetItem").innerHTML = rarity+' '+itemarr[itemNumber].na3;
+		return
+	}
+	document.getElementById("testGetItem").innerHTML = rarity;
+}
 
 
 
