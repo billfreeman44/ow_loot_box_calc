@@ -485,7 +485,7 @@ function setCookie(cname, cvalue, exdays) {
 
 function clearCookie(){
 	console.log('attempting to clear a cookie');
-	setCookie('none', 'none', -1);
+	setCookie('checked', 'none', -1);
 }
 
 function getCookie(cname) {
@@ -503,17 +503,6 @@ function getCookie(cname) {
     return "";
 }
 
-function checkCookie() {
-    var user = getCookie("username");
-    if (user != "") {
-        alert("Welcome again " + user);
-    } else {
-        user = prompt("Please enter your name:", "");
-        if (user != "" && user != null) {
-            setCookie("username", user, 365);
-        }
-    }
-}
 
 
 function makeUrl(){
