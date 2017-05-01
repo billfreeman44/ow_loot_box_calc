@@ -541,7 +541,7 @@ function saveSelectedToCookies() {
 
 function restoreCookieStuff() {
 	console.log('called cookie stuff');
-	var cookieStr=getCookie(cname);
+	var cookieStr=getCookie("checked");
 	if (cookieStr) {
 		var array = cookieStr.split(',');
 		var splits;
