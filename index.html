@@ -56,19 +56,18 @@ color: #f426f0 ;
 color: #f4af25 ;
 
 }
-
+.column-left{ float: left; width: 250px; }
+.column-center{ float: left; width: 250px; }
+.column-right{ display: inline-block; width: 250px; }
 
 </style>
 </head> 
 <body> 
 
 <p>This is an item table for overwatch.</p> 
-<p id='goldbox'> 
 
-Current gold: <input type="number" id="userGold" value="0">
-
-</p><p id='RADIOS' style="column-count: 3"> 
-
+<div class="container">
+   <div class="column-left">
 <input type="radio" name="herodisplay" value="1" id="heroNum1" onclick="updateTable();" checked> Ana<br>
 <input type="radio" name="herodisplay" value="2" id="heroNum2" onclick="updateTable();"> Bastion<br>
 <input type="radio" name="herodisplay" value="3" id="heroNum3" onclick="updateTable();"> Dva<br>
@@ -78,6 +77,8 @@ Current gold: <input type="number" id="userGold" value="0">
 <input type="radio" name="herodisplay" value="7" id="heroNum7" onclick="updateTable();"> Lucio<br>
 <input type="radio" name="herodisplay" value="8" id="heroNum8" onclick="updateTable();"> Mccree<br>
 <input type="radio" name="herodisplay" value="9" id="heroNum9" onclick="updateTable();"> Mei<br>
+   </div>
+   <div class="column-center">
 <input type="radio" name="herodisplay" value="10" id="heroNum10" onclick="updateTable();"> Mercy<br>
 <input type="radio" name="herodisplay" value="11" id="heroNum11" onclick="updateTable();"> Orisa<br>
 <input type="radio" name="herodisplay" value="12" id="heroNum12" onclick="updateTable();"> Pharah<br>
@@ -87,6 +88,8 @@ Current gold: <input type="number" id="userGold" value="0">
 <input type="radio" name="herodisplay" value="16" id="heroNum16" onclick="updateTable();"> Soldier-76<br>
 <input type="radio" name="herodisplay" value="17" id="heroNum17" onclick="updateTable();"> Sombra<br>
 <input type="radio" name="herodisplay" value="18" id="heroNum18" onclick="updateTable();"> Symmetra<br>
+   </div>
+   <div class="column-right">
 <input type="radio" name="herodisplay" value="19" id="heroNum19" onclick="updateTable();"> Torbjorn<br>
 <input type="radio" name="herodisplay" value="20" id="heroNum20" onclick="updateTable();"> Tracer<br>
 <input type="radio" name="herodisplay" value="21" id="heroNum21" onclick="updateTable();"> Widowmaker<br>
@@ -96,33 +99,91 @@ Current gold: <input type="number" id="userGold" value="0">
 <input type="radio" name="herodisplay" value="25" id="heroNum25" onclick="updateTable();"> All Heroes (icons and sprays) <br>
 <input type="radio" name="herodisplay" value="25" id="heroNum26" onclick="updateTable();"> Show everything<br>
 
-</p><p id='demo3'> 
-<input type="checkbox" id="showSkins" onclick="updateTable();" checked> Show Skins <br>
+   </div>
+</div>
+
+<br>
+<br>
+
+<div class="container">
+   <div class="column-left">
+      <input type="checkbox" id="showSkins" onclick="updateTable();" checked> Show Skins <br>
 <input type="checkbox" id="showEmotes" onclick="updateTable();" checked> Show Emotes <br>
 <input type="checkbox" id="showIntros" onclick="updateTable();" checked> Show Highlight Intros <br>
 <input type="checkbox" id="showPoses" onclick="updateTable();" checked> Show Victory Poses <br>
 <input type="checkbox" id="showVoices" onclick="updateTable();" checked> Show Voice Lines <br>
 <input type="checkbox" id="showSprays" onclick="updateTable();"> Show Sprays <br>
 <input type="checkbox" id="showIcons" onclick="updateTable();"> Show Icons <br>
-<br>
-
+   </div>
+   <div class="column-center">
 <input type="checkbox" id="showNonEvent" onclick="updateTable();" checked> Show Non-event items <br>
 <input type="checkbox" id="showUprising" onclick="updateTable();"> Show Uprising <br>
 <input type="checkbox" id="showEvents" onclick="updateTable();"> Show Other events <br>
-
-<br>
-
+   </div>
+   <div class="column-right">
 <input type="checkbox" id="showAchievement" onclick="updateTable();"> Show Achievement items <br>
 <input type="checkbox" id="showBlizzcon" onclick="updateTable();"> Show Items from Blizzcon <br>
 <input type="checkbox" id="showDefaultItems" onclick="updateTable();"> Show Default items <br>
 <input type="checkbox" id="showNormals" onclick="updateTable();" checked> Show Normal items <br>
+<br>
+   </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+   <div class="column-left">
+<center>SETTINGS</center><br>
+<p id='goldbox'> 
+Current gold: <input type="number" id="userGold" value="0">
 
 </p>
-<p id='testGetItem'> </p>
-<button onclick="buttonPush()">Get an item bro</button><br><br>
-<button onclick="clearCookie()">Clear Cookie</button><br><br>
+
+<button onclick="startSimulating()">Start simulation</button><br><br>
+<br>
+
+<p> 
+Number of Iterations: <input type="number" id="nIterations" value="10"><br>
+   </div>
+   <div class="column-center">
+
+
+<p id='demo3'> 
+
+</p>
 
 <p id='urlArea'> url area </p>
+<br>
+<p id='testGetItem'> </p>
+
+
+<button onclick="clearCookie()">Clear Cookie</button><br><br>
+
+   </div>
+   <div class="column-right">
+Desired Commons: <span id='wantedCommons'></span><br>
+Desired Rares: <span id='wantedRares'></span><br>
+Desired Epics: <span id='wantedEpics'></span><br>
+Desired Legendaries: <span id='wantedLegs'></span><br>
+Desired Icons: <span id='wantedIcons'></span><br>
+Gold needed to buy all: <span id='goldNeeded'></span><br>
+<br>
+   
+   </div>
+</div>
+
+
+
+<br><br><br><br><br>
+<br><br><br><br><br>
+
+
+
+
 <div id="myDiv"></div>
 
 <script src="item_output.js"></script>
@@ -461,12 +522,116 @@ function buttonPush(){
 	var itemNumber=-1; 
 	if (rarity == 'common' || rarity == 'rare' || rarity == 'epic' || rarity == 'leg') {
 		itemNumber=getNewItemNumber(rarity);
-		document.getElementById("testGetItem").innerHTML = rarity+' '+itemarr[itemNumber].na3;
+		document.getElementById("testGetItem").innerHTML = rarity+' '+itemarr[itemNumber].na;
 		return
 	}
 	document.getElementById("testGetItem").innerHTML = rarity;
 }
 
+function calcWantArr() {
+	var outarr=[];
+	for (var i=0;i<itemarr.length;i++){
+		if (itemarr[i].ck == 2 ) {
+			outarr.push(i);
+		}
+	}
+	return outarr;
+}
+
+function calcHaveArr() {
+	var outarr=[];
+	for (var i=0;i<itemarr.length;i++){
+		if (itemarr[i].ck == 1 ) {
+			outarr.push(i);
+		}
+	}
+	return outarr;
+}
+
+function calculateCost(wantArr){
+	var cost=0;
+	for (var i=0;i<wantArr.length;i++){
+		cost += itemarr[wantArr[i]].co;
+	}
+	return cost;
+}
+
+
+
+function simulationOver(haveArr,wantArr,gold) {
+	var i=0;
+	//check if you have all the items you want
+	for (i=0;i<wantArr.length;i++) {
+		if (haveArr.includes(wantArr[i])) {wantArr.splice(i,1);}
+	}
+	if (wantArr.length == 0) {return true;}
+	
+	//check if there is an icon that you do not have
+	for (i=0;i<wantArr.length;i++) { //cost is 0 for icons
+		if (itemarr[wantArr[i]].co == 0) {
+			return false;
+		} 
+	}
+	
+	//check if gold can buy the remaining items
+	if (gold >= calculateCost(wantArr)) {
+		console.log('got gold '+gold+' dfsdf '+calculateCost(wantArr));
+		return true
+	}
+	
+	return false;
+
+}
+
+
+//runs a single simulation to see how many loot boxes
+function runSimulation(wantArr,haveArr,startGold,maxItems) {
+	var iterationNumber=0;
+	var itemRarity='';
+	while (simulationOver(haveArr,wantArr,startGold) == false && iterationNumber < maxItems){
+		//console.log(wantArr.length);
+		//console.log('start gold '+startGold);
+		itemRarity=getNewItemRarity();
+		if (itemRarity == 'common' || itemRarity == 'rare' || itemRarity == 'epic' || itemRarity == 'leg')  {
+			itemNumber=getNewItemNumber(itemRarity);
+			if (haveArr.includes(itemNumber)) {
+				if (itemRarity == 'common'){ startGold += 5;}
+				if (itemRarity == 'rare'){ startGold += 75;}
+				if (itemRarity == 'epic'){ startGold += 50;}
+				if (itemRarity == 'leg'){ startGold += 200;}
+			} else {
+				haveArr.push(itemNumber);
+			}
+		} else { 
+		if (itemRarity == 'rare-currency'){ startGold += 50;}
+		if (itemRarity == 'epic-currency'){ startGold += 150;}
+		if (itemRarity == 'leg-currency'){ startGold += 500;}
+		}
+	iterationNumber++;
+	}
+	//console.log(haveArr);
+	return iterationNumber/4;
+}
+
+//function to run simulations
+function startSimulating() {
+	var n_iter=Number(document.getElementById("nIterations").value);
+	var maxItems=5000*4;
+	var lootBoxesNeeded=[];
+	var wantArr=calcWantArr();
+	var haveArr=calcHaveArr();
+	//console.log(wantArr);
+	//console.log(haveArr);
+	var startGold=Number(document.getElementById("userGold").value);
+	for (var i=0;i<n_iter;i++){
+		wantArr=calcWantArr();
+		haveArr=calcHaveArr();
+		startGold=Number(document.getElementById("userGold").value);
+		lootBoxesNeeded.push(runSimulation(wantArr,haveArr,startGold,maxItems));
+	}
+	console.log(lootBoxesNeeded);
+
+}
 
 
 
@@ -551,10 +716,6 @@ function restoreCookieStuff() {
 
 }
 
-
-
-
-
 //get the "checked" variable from the URL
 function getChecked()
 {
@@ -591,8 +752,8 @@ updateCheckboxVar();
 <p>
 <table class="sortable" id="withsymbolsbeforesorting"><thead><tr>
 <th>Have it</th>
-<th>Want it</th>
-<th>Type</th>
+<th >Want it</th>
+<th style="width: 60px;">Type</th>
 <th>Name</th>
 <th>Rarity</th>
 <th>Event</th>
