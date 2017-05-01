@@ -540,6 +540,7 @@ function saveSelectedToCookies() {
 }
 
 function restoreCookieStuff() {
+	console.log('called cookie stuff');
 	var cookieStr=getCookie(cname);
 	if (cookieStr) {
 		var array = cookieStr.split(',');
@@ -582,8 +583,10 @@ function updateCheckboxVar() {
 		}
 	}
 }
+
 restoreCookieStuff();
 updateCheckboxVar();
+
 </script>
 
 <p>
