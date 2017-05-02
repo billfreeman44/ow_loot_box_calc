@@ -6,6 +6,7 @@
   <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
   <meta http-equiv="pragma" content="no-cache">
 <script src="sorttable.js"></script>
+<script src="plotly-latest.min.js"></script>
 
 <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
 <title>Item table for Overwatch</title> 
@@ -648,6 +649,38 @@ function outputStatistics(lootBoxesNeeded) {
 	}
 	document.getElementById("boxesNeededAvg").innerHTML=Math.floor(sum/lootBoxesNeeded.length); //
 	document.getElementById("boxesNeededMed").innerHTML=lootBoxesNeeded[Math.floor(lootBoxesNeeded.length/4)];
+	
+	var data = [
+		  {
+			x: lootBoxesNeeded,
+			type: 'histogram',
+			marker: {
+			color: 'rgba(100,250,100,0.7)',
+			},
+		  }
+		];
+	var layout = {
+	  title: 'Loot Boxes Needed',
+	  xaxis: {
+		title: 'Loot Boxes Needed to get your items',
+		titlefont: {
+		  family: 'Courier New, monospace',
+		  size: 18,
+		  color: '#7f7f7f'
+		}
+	  },
+	  yaxis: {
+		title: 'Count',
+		titlefont: {
+		  family: 'Courier New, monospace',
+		  size: 18,
+		  color: '#7f7f7f'
+		}
+	  }
+	};
+	
+	Plotly.newPlot('myDiv', data,layout);
+	
 }
 
 
