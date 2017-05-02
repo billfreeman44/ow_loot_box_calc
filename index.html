@@ -182,8 +182,7 @@ Median # of loot boxes to get this: <span id='boxesNeededMed'></span><br>
 
 
 
-<br><br><br><br><br>
-<br><br><br><br><br>
+<br><br><br>
 
 
 
@@ -562,37 +561,43 @@ function calculateCost(wantArr){
 
 
 
-function simulationOver(haveArr,wantArr,gold) {
-	var i=0;
-	//check if you have all the items you want
-	for (i=0;i<wantArr.length;i++) {
-		if (haveArr.includes(wantArr[i])) {wantArr.splice(i,1);}
+function simulationOver(haveArr,wantArr,gold,j,modnumber) {
+	if (j%modnumber == 0) {//this line greatly speeds up the calculation but adds a little error in. #worth it.
+		//console.log(j);
+		var i=0;
+		//check if you have all the items you want
+		for (i=0;i<wantArr.length;i++) {
+			if (haveArr.includes(wantArr[i])) {wantArr.splice(i,1);}
+		}
+		if (wantArr.length == 0) {return true;}
+		
+		//check if there is an icon that you do not have
+		for (i=0;i<wantArr.length;i++) { //cost is 0 for icons
+			if (itemarr[wantArr[i]].co == 0) {
+				return false;
+			} 
+		}
+		
+		//check if gold can buy the remaining items
+		if (gold >= calculateCost(wantArr)) {
+			//console.log('got gold '+gold+' dfsdf '+calculateCost(wantArr));
+			return true
+		}
+		
+		return false;
+	} else {
+		return false;
 	}
-	if (wantArr.length == 0) {return true;}
-	
-	//check if there is an icon that you do not have
-	for (i=0;i<wantArr.length;i++) { //cost is 0 for icons
-		if (itemarr[wantArr[i]].co == 0) {
-			return false;
-		} 
-	}
-	
-	//check if gold can buy the remaining items
-	if (gold >= calculateCost(wantArr)) {
-		//console.log('got gold '+gold+' dfsdf '+calculateCost(wantArr));
-		return true
-	}
-	
-	return false;
 
 }
 
 
 //runs a single simulation to see how many loot boxes
 function runSimulation(wantArr,haveArr,startGold,maxItems) {
+	if (wantArr.length<50){var modnumber=wantArr.length;} else {var modnumber=50;}
 	var iterationNumber=0;
 	var itemRarity='';
-	while (simulationOver(haveArr,wantArr,startGold) == false && iterationNumber < maxItems){
+	while (simulationOver(haveArr,wantArr,startGold,iterationNumber,modnumber) == false && iterationNumber < maxItems){
 		//console.log(wantArr.length);
 		//console.log('start gold '+startGold);
 		itemRarity=getNewItemRarity();
@@ -654,10 +659,12 @@ function outputStatistics(lootBoxesNeeded) {
 		  {
 			x: lootBoxesNeeded,
 			type: 'histogram',
+			autobinx: true,
+		    nbinsx: 40,
 			marker: {
 			color: 'rgba(100,250,100,0.7)',
 			},
-		  }
+		  },
 		];
 	var layout = {
 	  title: 'Loot Boxes Needed',
