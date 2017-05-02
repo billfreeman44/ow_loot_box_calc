@@ -65,7 +65,18 @@ color: #f4af25 ;
 </head> 
 <body> 
 
-<p>This is an item table for overwatch.</p> 
+<p style=' width: 300px;'>This is a website to simulate 
+how many loot boxes it takes to get any selection 
+of items in overwatch.  <br><br>
+First, select the items that you already have ("have it" column).  <br>
+Second, select the items that you want ("have it" column).<br>
+Next, input the amount of gold you have. <br>
+Finally, click the "start simulation" button and thats it! <br><br>
+
+When you click on any check box your selections are saved on a cookie.  When you come back, your selections are restored from the cookie.  Click the "clear saved checks" button to delete your cookie and then reload the page to start fresh.  In addition to a cookie, a link is created that saves your selections.  Bookmark this link to save that particular selection.<br><br>
+
+
+</p> 
 
 <div class="container">
    <div class="column-left">
@@ -140,38 +151,36 @@ color: #f4af25 ;
    <div class="column-left">
 <center>SETTINGS</center><br>
 <p id='goldbox'> 
-Current gold: <input type="number" id="userGold" value="0">
-
+Current gold: <input type="number" id="userGold" value="0" size="10"><br><br>
+Number of Iterations: <input type="number" id="nIterations" value="1000" size="10"><br>
 </p>
 
-<button onclick="startSimulating()">Start simulation</button><br><br>
+<button onclick="startSimulating()">Start simulation</button>
 <br>
 
 <p> 
-Number of Iterations: <input type="number" id="nIterations" value="1000"><br>
    </div>
    <div class="column-center">
 
+<center>URL and Cookie stuff</center><br>
 
-<p id='demo3'> 
-
-</p>
-
-<p id='urlArea'> url area </p>
+<p id='urlArea'> When you start selecting items, a link will appear here and you can save it to your bookmarks to save that selection </p>
 <br>
 <p id='testGetItem'> </p>
 
 
-<button onclick="clearCookie()">Clear Cookie</button><br><br>
+<button onclick="clearCookie()">Clear saved checks</button><br> (refresh after clicking "clear saved checks") <br>
 
    </div>
    <div class="column-right">
+
+<center>Simulation results!</center><br><br>
 Wanted Commons: <span id='wantedCommons'></span><br>
 Wanted Rares: <span id='wantedRares'></span><br>
 Wanted Epics: <span id='wantedEpics'></span><br>
 Wanted Legendaries: <span id='wantedLegs'></span><br>
 Wanted Icons: <span id='wantedIcons'></span><br>
-Gold needed to buy all: <span id='goldNeeded'></span><br>
+Total cost in gold: <span id='goldNeeded'></span><br>
 <br>
 Results of simulation:<br>
 Average # of loot boxes to get this: <span id='boxesNeededAvg'></span><br>
