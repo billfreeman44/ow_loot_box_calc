@@ -216,25 +216,31 @@ function checkMatch(checkId,thisId) {
     document.getElementById(checkId).checked = document.getElementById(thisId).checked;
 }
 
+//update the "ck" value for some item
 function addCheckItemArr(num,code){
 	itemarr[num].ck=code;
 }
 
+//convert a number code to a rarity string.
 function numToRarity(num) {
 	if (num == 0){return '-';}
 	var rarities=['common','rare','epic','legendary'];
 	return rarities[num-1];
-
 }
 
+//convert a number code to a type string.
 function numToType(num) {
 	var types=['unknown','icons','sprays','skins','emotes','intros','voicelines','poses'];
 	return types[num];
 }
+
+//convert a number code to an event string.
 function numToEvent(num) {
 	var events=['-','Halloween-16','Summer-16','Uprising-17','Winter-16','Rooster-17'];
 	return events[num]
 }
+
+//convert a number code to a hero string.
 function numToHero(num) {
 	var heroes=['error','ana','bastion','dva','genji',
             'hanzo','junkrat','lucio','mccree',
@@ -245,8 +251,9 @@ function numToHero(num) {
 	return heroes[num];
 }
 
-//num 1 = achivement (1 achievement, 2 blizzcon)
-//2 = is default bool
+//convert a number code to a "special" string.
+//num1 = achivement (1 achievement, 2 blizzcon)
+//num2 = is true if default item false if not
 function numToSpecial(num1,num2) {
 	if (num1 == 1) {
 	return 'Achievement';
@@ -260,6 +267,8 @@ function numToSpecial(num1,num2) {
 	return '-';
 }
 
+
+//outputs a checkbox string... this code is awful.
 //inputs are default, achievement, itemNumber, event, have (1=have,0=want)
 function outputCheckBox(def,ach,num,eve,hav) {
 	var outstr='<input type="checkbox"';
@@ -346,8 +355,7 @@ function outputCheckBox(def,ach,num,eve,hav) {
 
 }
 
-
-
+//output a row in the table.
 function makeRow(itemNumber) {
 	var outputstr='';
 	console.log('making row for '+itemNumber)
@@ -365,10 +373,7 @@ function makeRow(itemNumber) {
 	return outputstr;
 }
 
-
-
-
-
+//output the hero ID that is selected w/ radio button.
 function heroSelected() {
 	for (var i=1;i<27;i++) {
 		console.log(i);
@@ -379,9 +384,6 @@ function heroSelected() {
 	console.log('there was an invalid hero selected... defaulting to displaying ana!');
 	return 1; //error!!
 }
-
-
-
 
 //return true if item should be shown based on its type
 function showItemType(i) {
@@ -440,15 +442,10 @@ function showSpecial(i) {
 	if (specialstr == '-' && document.getElementById('showNormals').checked == true) {
 		return true;
 	}
-	
-	
 	return false;
 }
 
-
-
-
-
+//update the table rows.
 function updateTable() {
 	var outputstr='';
 	var i=0;
@@ -461,17 +458,11 @@ function updateTable() {
 				outputstr+='<tr>'+makeRow(i) +'</tr>';
 			}
 		}
-	
 	}
-	
-	
-	
 	document.getElementById("tableBody").innerHTML =outputstr;
-	
 }
 
-
-
+//update item counters
 function updateDesired() {
 	var wantArr=calcWantArr();
 	var counter=0;
@@ -507,16 +498,8 @@ function updateDesired() {
 		if (itemarr[wantArr[i]].co == 0) {counter++;}
 	}
 	document.getElementById("wantedIcons").innerHTML=counter;
-
 }
-
-
-
-
 </script>
-
-
-
 
 <script>
 //simulation functions!
@@ -525,15 +508,18 @@ function updateDesired() {
 function intBetween(bot,top){
 	return Math.floor(Math.random() * (top - bot + 1) + bot);
 }
-
+/*
 var probabilities={'common':5866,'rare':2741,'epic':467,'leg':189, 
             'rare-currency':428,'epic-currency':255,'leg-currency':54, 
             'p-event':0.3};
-			
+*/
+
+//probabilities of getting each item in percent*10			
 var probAdj={'common':5866,'rare':2741,'epic':467,'leg':189, 
             'rare-currency':428,'epic-currency':255,'leg-currency':54, 
             'p-event':0.3};
-			
+
+//adjust probability so that it just increases.
 probAdj['rare']=probAdj['rare']+probAdj['common'];
 probAdj['epic']=probAdj['epic']+probAdj['rare'];
 probAdj['leg']=probAdj['leg']+probAdj['epic'];
@@ -542,6 +528,19 @@ probAdj['epic-currency']=probAdj['epic-currency']+probAdj['rare-currency'];
 probAdj['leg-currency']=probAdj['leg-currency']+probAdj['epic-currency'];
 
 
+//get new item's rarity 
+function getNewItemRarity(){
+	var rand = intBetween(1,probAdj['epic-currency']);
+	var items=['common','rare','epic','leg','rare-currency','epic-currency','leg-currency'];
+	for (var i=0; i<items.length;i++){
+		if (rand < probAdj[items[i]]){
+			return items[i];
+		} 
+	}
+	return 'err';
+}
+
+//based on the rarity, get a new item's index
 function getNewItemNumber(rarity){
 	if (rarity == 'common') {
 		return commonbox[intBetween(0,commonbox.length-1)]
@@ -555,33 +554,10 @@ function getNewItemNumber(rarity){
 	if (rarity == 'leg') {
 		return legbox[intBetween(0,legbox.length-1)]
 	}
-	
-
 }
 
 
-function getNewItemRarity(){
-	var rand = intBetween(1,probAdj['epic-currency']);
-	var items=['common','rare','epic','leg','rare-currency','epic-currency','leg-currency'];
-	for (var i=0; i<items.length;i++){
-		if (rand < probAdj[items[i]]){
-			return items[i];
-		} 
-	}
-	return 'err';
-}
-
-function buttonPush(){
-	var rarity=getNewItemRarity();
-	var itemNumber=-1; 
-	if (rarity == 'common' || rarity == 'rare' || rarity == 'epic' || rarity == 'leg') {
-		itemNumber=getNewItemNumber(rarity);
-		document.getElementById("testGetItem").innerHTML = rarity+' '+itemarr[itemNumber].na;
-		return
-	}
-	document.getElementById("testGetItem").innerHTML = rarity;
-}
-
+//figure out what items the user wants.
 function calcWantArr() {
 	var outarr=[];
 	for (var i=0;i<itemarr.length;i++){
@@ -592,6 +568,7 @@ function calcWantArr() {
 	return outarr;
 }
 
+//figure out what items the user has.
 function calcHaveArr() {
 	var outarr=[];
 	for (var i=0;i<itemarr.length;i++){
@@ -602,18 +579,21 @@ function calcHaveArr() {
 	return outarr;
 }
 
+//figure out what items the user wants costs
 function calcCost(wantArr){
 	var cost=0;
 	for (var i=0;i<wantArr.length;i++){
-		cost += itemarr[wantArr[i]].co;
+		cost += itemarr[wantArr[i]].co; //icons are set to 0
 	}
 	return cost;
 }
 
 
-
+//check if the simulation should be over
 function simulationOver(haveArr,wantArr,gold,j,modnumber) {
-	if (j%modnumber == 0) {//this line greatly speeds up the calculation but adds a little error in. #worth it.
+	//only check once every few iterations. pointless to check every one.  Its not that precise.
+	//this line greatly speeds up the calculation but adds a little error in. #worth it.
+	if (j%modnumber == 0) {
 		//console.log(j);
 		var i=0;
 		//check if you have all the items you want
@@ -645,7 +625,10 @@ function simulationOver(haveArr,wantArr,gold,j,modnumber) {
 
 //runs a single simulation to see how many loot boxes
 function runSimulation(wantArr,haveArr,startGold,maxItems) {
+	//determine how frequently to check if we got everything
 	if (wantArr.length<10){var modnumber=wantArr.length;} else {var modnumber=10;}
+	
+	//if there is an icon, check once every 50
 	for (i=0;i<wantArr.length;i++) { //cost is 0 for icons
 			if (itemarr[wantArr[i]].co == 0) {
 				modnumber=50;
@@ -659,15 +642,15 @@ function runSimulation(wantArr,haveArr,startGold,maxItems) {
 		itemRarity=getNewItemRarity();
 		if (itemRarity == 'common' || itemRarity == 'rare' || itemRarity == 'epic' || itemRarity == 'leg')  {
 			itemNumber=getNewItemNumber(itemRarity);
-			if (haveArr.includes(itemNumber)) {
+			if (haveArr.includes(itemNumber)) { //duplicate
 				if (itemRarity == 'common'){ startGold += 5;}
 				if (itemRarity == 'rare'){ startGold += 75;}
 				if (itemRarity == 'epic'){ startGold += 50;}
 				if (itemRarity == 'leg'){ startGold += 200;}
-			} else {
+			} else {//not a duplicate
 				haveArr.push(itemNumber);
 			}
-		} else { 
+		} else { //got monies
 		if (itemRarity == 'rare-currency'){ startGold += 50;}
 		if (itemRarity == 'epic-currency'){ startGold += 150;}
 		if (itemRarity == 'leg-currency'){ startGold += 500;}
@@ -678,7 +661,7 @@ function runSimulation(wantArr,haveArr,startGold,maxItems) {
 	return iterationNumber/4;
 }
 
-//function to run simulations
+//function to loop through many simulations
 function startSimulating() {
 	var n_iter=Number(document.getElementById("nIterations").value);
 	var maxItems=3000*4;
