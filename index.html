@@ -594,7 +594,12 @@ function simulationOver(haveArr,wantArr,gold,j,modnumber) {
 
 //runs a single simulation to see how many loot boxes
 function runSimulation(wantArr,haveArr,startGold,maxItems) {
-	if (wantArr.length<50){var modnumber=wantArr.length;} else {var modnumber=50;}
+	if (wantArr.length<10){var modnumber=wantArr.length;} else {var modnumber=10;}
+	for (i=0;i<wantArr.length;i++) { //cost is 0 for icons
+			if (itemarr[wantArr[i]].co == 0) {
+				modnumber=50;
+			} 
+		}
 	var iterationNumber=0;
 	var itemRarity='';
 	while (simulationOver(haveArr,wantArr,startGold,iterationNumber,modnumber) == false && iterationNumber < maxItems){
