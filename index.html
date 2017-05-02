@@ -147,7 +147,7 @@ Current gold: <input type="number" id="userGold" value="0">
 <br>
 
 <p> 
-Number of Iterations: <input type="number" id="nIterations" value="10"><br>
+Number of Iterations: <input type="number" id="nIterations" value="1000"><br>
    </div>
    <div class="column-center">
 
@@ -171,6 +171,9 @@ Desired Epics: <span id='wantedEpics'></span><br>
 Desired Legendaries: <span id='wantedLegs'></span><br>
 Desired Icons: <span id='wantedIcons'></span><br>
 Gold needed to buy all: <span id='goldNeeded'></span><br>
+Status: <span id='status'></span><br>
+Average # of loot boxes to get this: <span id='boxesNeededAvg'></span><br>
+Median # of loot boxes to get this: <span id='boxesNeededMed'></span><br>
 <br>
    
    </div>
@@ -442,7 +445,7 @@ function updateTable() {
 	var displayHeroId=heroSelected();
 	console.log('hero selected id is '+displayHeroId);
 	
-	for (i=0;i<n_items;i++) {
+	for (i=0;i<itemarr.length;i++) {
 		if (displayHeroId ==  itemarr[i].he || displayHeroId == 26) {
 			if (showItemType(i) && showEvent(i) && showSpecial(i)){
 				outputstr+='<tr>'+makeRow(i) +'</tr>';
@@ -575,7 +578,7 @@ function simulationOver(haveArr,wantArr,gold) {
 	
 	//check if gold can buy the remaining items
 	if (gold >= calculateCost(wantArr)) {
-		console.log('got gold '+gold+' dfsdf '+calculateCost(wantArr));
+		//console.log('got gold '+gold+' dfsdf '+calculateCost(wantArr));
 		return true
 	}
 	
@@ -620,19 +623,32 @@ function startSimulating() {
 	var lootBoxesNeeded=[];
 	var wantArr=calcWantArr();
 	var haveArr=calcHaveArr();
-	//console.log(wantArr);
-	//console.log(haveArr);
+	console.log(wantArr);
+	console.log(haveArr);
 	var startGold=Number(document.getElementById("userGold").value);
 	for (var i=0;i<n_iter;i++){
 		wantArr=calcWantArr();
 		haveArr=calcHaveArr();
 		startGold=Number(document.getElementById("userGold").value);
 		lootBoxesNeeded.push(runSimulation(wantArr,haveArr,startGold,maxItems));
+		//if (i % 100 == 0){
+		//	document.getElementById("status").innerHTML=i;
+		//	setTimeout(startSimulating, 100)
+		//}
 	}
-	console.log(lootBoxesNeeded);
-
+	//console.log(lootBoxesNeeded);
+	outputStatistics(lootBoxesNeeded);
 }
 
+function outputStatistics(lootBoxesNeeded) {
+	lootBoxesNeeded.sort()
+	var sum=0;
+	for (var i=0;i<lootBoxesNeeded.length;i++){
+		sum += lootBoxesNeeded[i];	
+	}
+	document.getElementById("boxesNeededAvg").innerHTML=Math.floor(sum/lootBoxesNeeded.length); //
+	document.getElementById("boxesNeededMed").innerHTML=lootBoxesNeeded[Math.floor(lootBoxesNeeded.length/4)];
+}
 
 
 </script>
