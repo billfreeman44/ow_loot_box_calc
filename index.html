@@ -57,9 +57,9 @@ color: #f426f0 ;
 color: #f4af25 ;
 
 }
-.column-left{ float: left; width: 250px; }
-.column-center{ float: left; width: 250px; }
-.column-right{ display: inline-block; width: 250px; }
+.column-left{ float: left; width: 300px; }
+.column-center{ float: left; width: 300px; }
+.column-right{ display: inline-block; width: 300px; }
 
 </style>
 </head> 
@@ -166,13 +166,14 @@ Number of Iterations: <input type="number" id="nIterations" value="1000"><br>
 
    </div>
    <div class="column-right">
-Desired Commons: <span id='wantedCommons'></span><br>
-Desired Rares: <span id='wantedRares'></span><br>
-Desired Epics: <span id='wantedEpics'></span><br>
-Desired Legendaries: <span id='wantedLegs'></span><br>
-Desired Icons: <span id='wantedIcons'></span><br>
+Wanted Commons: <span id='wantedCommons'></span><br>
+Wanted Rares: <span id='wantedRares'></span><br>
+Wanted Epics: <span id='wantedEpics'></span><br>
+Wanted Legendaries: <span id='wantedLegs'></span><br>
+Wanted Icons: <span id='wantedIcons'></span><br>
 Gold needed to buy all: <span id='goldNeeded'></span><br>
-Status: <span id='status'></span><br>
+<br>
+Results of simulation:<br>
 Average # of loot boxes to get this: <span id='boxesNeededAvg'></span><br>
 Median # of loot boxes to get this: <span id='boxesNeededMed'></span><br>
 <br>
@@ -187,7 +188,7 @@ Median # of loot boxes to get this: <span id='boxesNeededMed'></span><br>
 
 
 
-<div id="myDiv"></div>
+<div id="myDiv" style='width: 900px;'></div>
 
 <script src="item_output.js"></script>
 <script>
@@ -291,14 +292,14 @@ function outputCheckBox(def,ach,num,eve,hav) {
 	if (eve == 0 || eve == 3) {
 		if (hav) {
 			outstr+=' id="h'+num+'"';
-			outstr+=' onclick="toggleCheck(\'w'+num+'\',\'h'+num+'\');addCheckItemArr('+num+',1);makeUrl();"';
+			outstr+=' onclick="toggleCheck(\'w'+num+'\',\'h'+num+'\');addCheckItemArr('+num+',1);makeUrl();updateDesired();"';
 			if (itemarr[num].ck == 1) {
 				outstr+=' checked>';
 			} else {
 				outstr+='>';
 			}
 		} else {
-			outstr+=' id="w'+num+'" onclick="addCheckItemArr('+num+',2);makeUrl()"';
+			outstr+=' id="w'+num+'" onclick="addCheckItemArr('+num+',2);makeUrl();updateDesired();"';
 			if (itemarr[num].ck == 1) {
 				outstr+=' disabled="true" checked>';
 			} else { 
@@ -315,7 +316,7 @@ function outputCheckBox(def,ach,num,eve,hav) {
 	//other events
 	if (hav) {
 		outstr+=' id="h'+num+'"';
-		outstr+=' onclick="checkMatch(\'w'+num+'\',\'h'+num+'\');makeUrl()"';
+		outstr+=' onclick="checkMatch(\'w'+num+'\',\'h'+num+'\');makeUrl();updateDesired();"';
 		if (itemarr[num].ck == 1) {
 			outstr+=' checked>';
 		} else {
@@ -457,8 +458,49 @@ function updateTable() {
 	
 	
 	document.getElementById("tableBody").innerHTML =outputstr;
+	
+}
+
+
+
+function updateDesired() {
+	var wantArr=calcWantArr();
+	var counter=0;
+	var i=0;
+
+	document.getElementById("goldNeeded").innerHTML =calcCost(wantArr);
+
+	for (i=0;i<wantArr.length;i++) {
+		if (numToRarity(itemarr[wantArr[i]].ra) == 'common') {counter++;}
+	}
+	document.getElementById("wantedCommons").innerHTML=counter;
+	counter=0
+
+	for (i=0;i<wantArr.length;i++) {
+		if (numToRarity(itemarr[wantArr[i]].ra) == 'rare') {counter++;}
+	}
+	document.getElementById("wantedRares").innerHTML=counter;
+	counter=0
+
+	for (i=0;i<wantArr.length;i++) {
+		if (numToRarity(itemarr[wantArr[i]].ra) == 'epic') {counter++;}
+	}
+	document.getElementById("wantedEpics").innerHTML=counter;
+	counter=0
+
+	for (i=0;i<wantArr.length;i++) {
+		if (numToRarity(itemarr[wantArr[i]].ra) == 'legendary') {counter++;}
+	}
+	document.getElementById("wantedLegs").innerHTML=counter;
+	counter=0
+
+	for (i=0;i<wantArr.length;i++) {
+		if (itemarr[wantArr[i]].co == 0) {counter++;}
+	}
+	document.getElementById("wantedIcons").innerHTML=counter;
 
 }
+
 
 
 
@@ -551,7 +593,7 @@ function calcHaveArr() {
 	return outarr;
 }
 
-function calculateCost(wantArr){
+function calcCost(wantArr){
 	var cost=0;
 	for (var i=0;i<wantArr.length;i++){
 		cost += itemarr[wantArr[i]].co;
@@ -579,8 +621,8 @@ function simulationOver(haveArr,wantArr,gold,j,modnumber) {
 		}
 		
 		//check if gold can buy the remaining items
-		if (gold >= calculateCost(wantArr)) {
-			//console.log('got gold '+gold+' dfsdf '+calculateCost(wantArr));
+		if (gold >= calcCost(wantArr)) {
+			//console.log('got gold '+gold+' dfsdf '+calcCost(wantArr));
 			return true
 		}
 		
@@ -630,7 +672,7 @@ function runSimulation(wantArr,haveArr,startGold,maxItems) {
 //function to run simulations
 function startSimulating() {
 	var n_iter=Number(document.getElementById("nIterations").value);
-	var maxItems=5000*4;
+	var maxItems=3000*4;
 	var lootBoxesNeeded=[];
 	var wantArr=calcWantArr();
 	var haveArr=calcHaveArr();
@@ -642,10 +684,6 @@ function startSimulating() {
 		haveArr=calcHaveArr();
 		startGold=Number(document.getElementById("userGold").value);
 		lootBoxesNeeded.push(runSimulation(wantArr,haveArr,startGold,maxItems));
-		//if (i % 100 == 0){
-		//	document.getElementById("status").innerHTML=i;
-		//	setTimeout(startSimulating, 100)
-		//}
 	}
 	//console.log(lootBoxesNeeded);
 	outputStatistics(lootBoxesNeeded);
@@ -665,7 +703,7 @@ function outputStatistics(lootBoxesNeeded) {
 			x: lootBoxesNeeded,
 			type: 'histogram',
 			autobinx: true,
-		    nbinsx: 40,
+		    nbinsx: 35,
 			marker: {
 			color: 'rgba(100,250,100,0.7)',
 			},
@@ -682,7 +720,7 @@ function outputStatistics(lootBoxesNeeded) {
 		}
 	  },
 	  yaxis: {
-		title: 'Count',
+		title: 'Frequency',
 		titlefont: {
 		  family: 'Courier New, monospace',
 		  size: 18,
