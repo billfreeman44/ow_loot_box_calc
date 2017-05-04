@@ -57,59 +57,66 @@ color: #f426f0 ;
 color: #f4af25 ;
 
 }
-.column-left{ float: left; width: 300px; }
-.column-center{ float: left; width: 300px; }
-.column-right{ display: inline-block; width: 300px; }
+.column-left{ float: left; width: 250px; }
+.column-center{ float: left; width: 250px; }
+.column-right{ display: inline-block; width: 250px; }
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 
 </style>
 </head> 
 <body> 
-
-<p style=' width: 300px;'>This is a website to simulate 
+<a href="#" onclick="toggleHelp();" style='display: block;'> Show Help </a>
+<div id='helpDiv' style='display: none'>
+<p style=' width: 500px;'>This is a website to simulate 
 how many loot boxes it takes to get any selection 
-of items in overwatch.  <br><br>
-First, select the items that you already have ("have it" column).  <br>
-Second, select the items that you want ("want it" column).<br>
-Next, input the amount of gold you have. <br>
-Finally, click the "start simulation" button and thats it! <br><br>
-
+of items in overwatch.  </p> 
+<ol><li> Select the items that you already have ("have it" column).  
+<li> Select the items that you want ("want it" column).
+<li> Input the amount of gold you have. 
+<li> Click the "start simulation" button and thats it! 
+</ol>
+<p style=' width: 500px;'>
 When you click on any check box your selections are saved on a cookie.  When you come back, your selections are restored from the cookie.  Click the "clear saved checks" button to delete your cookie and then reload the page to start fresh.  In addition to a cookie, a link is created that saves your selections.  Bookmark this link to save that particular selection.<br><br>
 
 
 </p> 
+</div>
 
 <div class="container">
    <div class="column-left">
-<input type="radio" name="herodisplay" value="1" id="heroNum1" onclick="updateTable();" checked> Ana<br>
-<input type="radio" name="herodisplay" value="2" id="heroNum2" onclick="updateTable();"> Bastion<br>
-<input type="radio" name="herodisplay" value="3" id="heroNum3" onclick="updateTable();"> Dva<br>
-<input type="radio" name="herodisplay" value="4" id="heroNum4" onclick="updateTable();"> Genji<br>
-<input type="radio" name="herodisplay" value="5" id="heroNum5" onclick="updateTable();"> Hanzo<br>
-<input type="radio" name="herodisplay" value="6" id="heroNum6" onclick="updateTable();"> Junkrat<br>
-<input type="radio" name="herodisplay" value="7" id="heroNum7" onclick="updateTable();"> Lucio<br>
-<input type="radio" name="herodisplay" value="8" id="heroNum8" onclick="updateTable();"> Mccree<br>
-<input type="radio" name="herodisplay" value="9" id="heroNum9" onclick="updateTable();"> Mei<br>
-   </div>
-   <div class="column-center">
-<input type="radio" name="herodisplay" value="10" id="heroNum10" onclick="updateTable();"> Mercy<br>
-<input type="radio" name="herodisplay" value="11" id="heroNum11" onclick="updateTable();"> Orisa<br>
-<input type="radio" name="herodisplay" value="12" id="heroNum12" onclick="updateTable();"> Pharah<br>
-<input type="radio" name="herodisplay" value="13" id="heroNum13" onclick="updateTable();"> Reaper<br>
-<input type="radio" name="herodisplay" value="14" id="heroNum14" onclick="updateTable();"> Reinhardt<br>
-<input type="radio" name="herodisplay" value="15" id="heroNum15" onclick="updateTable();"> Roadhog<br>
-<input type="radio" name="herodisplay" value="16" id="heroNum16" onclick="updateTable();"> Soldier-76<br>
-<input type="radio" name="herodisplay" value="17" id="heroNum17" onclick="updateTable();"> Sombra<br>
-<input type="radio" name="herodisplay" value="18" id="heroNum18" onclick="updateTable();"> Symmetra<br>
-   </div>
-   <div class="column-right">
-<input type="radio" name="herodisplay" value="19" id="heroNum19" onclick="updateTable();"> Torbjorn<br>
-<input type="radio" name="herodisplay" value="20" id="heroNum20" onclick="updateTable();"> Tracer<br>
-<input type="radio" name="herodisplay" value="21" id="heroNum21" onclick="updateTable();"> Widowmaker<br>
-<input type="radio" name="herodisplay" value="22" id="heroNum22" onclick="updateTable();"> Winston<br>
-<input type="radio" name="herodisplay" value="23" id="heroNum23" onclick="updateTable();"> Zarya<br>
-<input type="radio" name="herodisplay" value="24" id="heroNum24" onclick="updateTable();"> Zenyatta<br>
-<input type="radio" name="herodisplay" value="25" id="heroNum25" onclick="updateTable();"> All Heroes (icons and sprays) <br>
-<input type="radio" name="herodisplay" value="25" id="heroNum26" onclick="updateTable();"> Show everything<br>
+<select id="herodisplay" onclick="updateTable();">
+    <option value="1">Ana</option>
+    <option value="2">Bastion</option>
+    <option value="3">Dva</option>
+    <option value="4">Genji</option>
+    <option value="5">Hanzo</option>
+    <option value="6">Junkrat</option>
+    <option value="7">Lucio</option>
+    <option value="8">Mccree</option>
+    <option value="9">Mei</option>
+    <option value="10">Mercy</option>
+    <option value="11">Orisa</option>
+    <option value="12">Pharah</option>
+    <option value="13">Reaper</option>
+    <option value="14">Reinhardt</option>
+    <option value="15">Roadhog</option>
+    <option value="16">Soldier-76</option>
+    <option value="17">Sombra</option>
+    <option value="18">Symmetra</option>
+    <option value="19">Torbjorn</option>
+    <option value="10">Tracer</option>
+    <option value="21">Widowmaker</option>
+    <option value="22">Winston</option>
+    <option value="23">Zarya</option>
+    <option value="24">Zenyatta</option>
+    <option value="25">All Heroes (icons/sprays)</option>
+    <option value="26">Show everything</option>
+  </select>
 
    </div>
 </div>
@@ -151,8 +158,9 @@ When you click on any check box your selections are saved on a cookie.  When you
    <div class="column-left">
 <center>SETTINGS</center><br>
 <p id='goldbox'> 
-Current gold: <input type="number" id="userGold" value="0" size="10"><br><br>
-Number of Iterations: <input type="number" id="nIterations" value="1000" size="10"><br>
+Current gold: <input type="number" id="userGold" value="0" size="10" style="width: 50px"><br><br>
+Max iterations: <input type="number" id="nIterations" value="1000" size="10" style="width: 50px"><br><br>
+Max time (sec): <input type="number" id="maxTime" value="5" size="10" style="width: 50px"><br>
 </p>
 
 <button onclick="startSimulating()">Start simulation</button>
@@ -164,12 +172,20 @@ Number of Iterations: <input type="number" id="nIterations" value="1000" size="1
 
 <center>URL and Cookie stuff</center><br>
 
-<p id='urlArea'> When you start selecting items, a link will appear here and you can save it to your bookmarks to save that selection </p>
-<br>
-<p id='testGetItem'> </p>
+<p id='urlArea'>  </p>
 
+<button onclick="updateCheckboxes('clearPageHave')">Clear "have it" on this page</button><br> 
+<button onclick="updateCheckboxes('clearPageWant')">Clear "want it" on this page</button><br> <br> 
 
-<button onclick="clearCookie()">Clear saved checks</button><br> (refresh after clicking "clear saved checks") <br>
+<button onclick="updateCheckboxes('checkPageHave')">Check "have it" on this page</button><br> 
+<button onclick="updateCheckboxes('checkPageWant')">Check "want it" on this page</button><br> <br> 
+
+<button onclick="clearCookie()">Clear all "have it"</button><br> 
+<button onclick="clearCookie()">Clear all "want it"</button><br> <br> 
+
+<button onclick="clearCookie()">Check all "have it"</button><br> 
+<button onclick="clearCookie()">Check all "want it"</button><br> <br> 
+ <br>
 
    </div>
    <div class="column-right">
@@ -185,6 +201,8 @@ Total cost in gold: <span id='goldNeeded'></span><br>
 Results of simulation:<br>
 Average # of loot boxes to get this: <span id='boxesNeededAvg'></span><br>
 Median # of loot boxes to get this: <span id='boxesNeededMed'></span><br>
+Iterations: <span id='nIterationsOut'>0</span><br>
+Time taken: <span id='timeTaken'>0</span> Seconds<br>
 <br>
    
    </div>
@@ -204,6 +222,17 @@ Median # of loot boxes to get this: <span id='boxesNeededMed'></span><br>
 //table display and selection functions!
 var n_items=itemarr.length;
 
+function toggleHelp() {
+    var x = document.getElementById('helpDiv');
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+    } else {
+        x.style.display = 'none';
+    }
+}
+
+
+
 //stuff for checkboxes
 //keeps same as checked and disables button
 function toggleCheck(checkId,thisId) {
@@ -218,7 +247,16 @@ function checkMatch(checkId,thisId) {
 
 //update the "ck" value for some item
 function addCheckItemArr(num,code){
-	itemarr[num].ck=code;
+	if (document.getElementById('h'+num).checked==1){
+		itemarr[num].ck=1;
+		return
+	}
+	if (document.getElementById('w'+num).checked==1){
+		itemarr[num].ck=2;
+		return
+	}
+	itemarr[num].ck=0;
+	return
 }
 
 //convert a number code to a rarity string.
@@ -375,6 +413,8 @@ function makeRow(itemNumber) {
 
 //output the hero ID that is selected w/ radio button.
 function heroSelected() {
+	return document.getElementById('herodisplay').value;
+	/*
 	for (var i=1;i<27;i++) {
 		console.log(i);
 		if (document.getElementById('heroNum'+i).checked == true) {
@@ -383,6 +423,7 @@ function heroSelected() {
 	}
 	console.log('there was an invalid hero selected... defaulting to displaying ana!');
 	return 1; //error!!
+	*/
 }
 
 //return true if item should be shown based on its type
@@ -445,6 +486,47 @@ function showSpecial(i) {
 	return false;
 }
 
+function updateCheckboxes(code) {
+	var displayHeroId=heroSelected();
+	for (i=0;i<itemarr.length;i++) {
+		if (code == 'clearPageWant'){
+			if (displayHeroId ==  itemarr[i].he || displayHeroId == 26){
+				if (itemarr[i].ck==2 && showItemType(i) && showEvent(i) && showSpecial(i)){itemarr[i].ck=0;}
+			}
+		}
+		if (code == 'clearPageHave'){
+			if (displayHeroId ==  itemarr[i].he || displayHeroId == 26){
+				if (itemarr[i].ck==1 && showItemType(i) && showEvent(i) && showSpecial(i)){itemarr[i].ck=0;}
+			}			
+		}
+		if (code == 'checkPageWant'){
+			if (displayHeroId ==  itemarr[i].he || displayHeroId == 26){
+				if (showItemType(i) && showEvent(i) && showSpecial(i)){itemarr[i].ck=2;}
+			}			
+		}
+		if (code == 'checkPageHave'){
+			if (displayHeroId ==  itemarr[i].he || displayHeroId == 26){
+				if (showItemType(i) && showEvent(i) && showSpecial(i)){itemarr[i].ck=1;}
+			}	
+		}
+		if (code == 'clearAllWant'){
+			itemarr[i].ck=1;
+		}
+		if (code == 'clearAllHave'){
+			
+		}
+		if (code == 'checkAllWant'){
+			
+		}
+		if (code == 'checkAllHave'){
+			
+		}
+	}
+	updateTable();
+	updateDesired();
+}
+
+
 //update the table rows.
 function updateTable() {
 	var outputstr='';
@@ -503,7 +585,7 @@ function updateDesired() {
 
 <script>
 //simulation functions!
-
+var wantArrGlobal=[];
 //return random integer including entpoints
 function intBetween(bot,top){
 	return Math.floor(Math.random() * (top - bot + 1) + bot);
@@ -590,53 +672,40 @@ function calcCost(wantArr){
 
 
 //check if the simulation should be over
-function simulationOver(haveArr,wantArr,gold,j,modnumber) {
-	//only check once every few iterations. pointless to check every one.  Its not that precise.
-	//this line greatly speeds up the calculation but adds a little error in. #worth it.
-	if (j%modnumber == 0) {
-		//console.log(j);
+function simulationOver(haveArr,gold) {
+
 		var i=0;
 		//check if you have all the items you want
-		for (i=0;i<wantArr.length;i++) {
-			if (haveArr.includes(wantArr[i])) {wantArr.splice(i,1);}
+		if (wantArrGlobal.includes(haveArr[haveArr.length-1])){
+			wantArrGlobal.splice(wantArrGlobal.indexOf(haveArr[haveArr.length-1]),1);
 		}
-		if (wantArr.length == 0) {return true;}
+		if (wantArrGlobal.length == 0) {return true;}
 		
 		//check if there is an icon that you do not have
-		for (i=0;i<wantArr.length;i++) { //cost is 0 for icons
-			if (itemarr[wantArr[i]].co == 0) {
+		for (i=0;i<wantArrGlobal.length;i++) { //cost is 0 for icons
+			if (itemarr[wantArrGlobal[i]].co == 0) {
 				return false;
 			} 
 		}
 		
 		//check if gold can buy the remaining items
-		if (gold >= calcCost(wantArr)) {
-			//console.log('got gold '+gold+' dfsdf '+calcCost(wantArr));
-			return true
+		if (gold >= calcCost(wantArrGlobal)) {
+			//console.log('got gold '+gold+' dfsdf '+calcCost(wantArrGlobal));
+			return true;
 		}
 		
 		return false;
-	} else {
-		return false;
-	}
-
 }
 
 
 //runs a single simulation to see how many loot boxes
-function runSimulation(wantArr,haveArr,startGold,maxItems) {
-	//determine how frequently to check if we got everything
-	if (wantArr.length<10){var modnumber=wantArr.length;} else {var modnumber=10;}
+function runSimulation(haveArr,startGold,maxItems) {
+
 	
-	//if there is an icon, check once every 50
-	for (i=0;i<wantArr.length;i++) { //cost is 0 for icons
-			if (itemarr[wantArr[i]].co == 0) {
-				modnumber=50;
-			} 
-		}
 	var iterationNumber=0;
 	var itemRarity='';
-	while (simulationOver(haveArr,wantArr,startGold,iterationNumber,modnumber) == false && iterationNumber < maxItems){
+	while (simulationOver(haveArr,startGold,iterationNumber) == false && iterationNumber < maxItems){
+
 		//console.log(wantArr.length);
 		//console.log('start gold '+startGold);
 		itemRarity=getNewItemRarity();
@@ -661,27 +730,49 @@ function runSimulation(wantArr,haveArr,startGold,maxItems) {
 	return iterationNumber/4;
 }
 
+function average(arr){
+	var sum=0;
+	for (var i=0;i<arr.length;i++) {sum += arr[i];}
+	return sum/arr.length;
+}
+
+
 //function to loop through many simulations
 function startSimulating() {
+	var t0 = performance.now();
+	var t2 = performance.now();
+	var t3 = performance.now();
 	var n_iter=Number(document.getElementById("nIterations").value);
 	var maxItems=3000*4;
 	var lootBoxesNeeded=[];
-	var wantArr=calcWantArr();
+	wantArrGlobal=calcWantArr();
+	//var wantArr=calcWantArr();
 	var haveArr=calcHaveArr();
-	console.log(wantArr);
+	var modnumber=4;
+	console.log(wantArrGlobal);
 	console.log(haveArr);
 	var startGold=Number(document.getElementById("userGold").value);
-	for (var i=0;i<n_iter;i++){
-		wantArr=calcWantArr();
-		haveArr=calcHaveArr();
-		startGold=Number(document.getElementById("userGold").value);
-		lootBoxesNeeded.push(runSimulation(wantArr,haveArr,startGold,maxItems));
+	simulation_block: {
+		for (var i=0;i<n_iter;i++){
+			wantArrGlobal=calcWantArr();
+			haveArr=calcHaveArr();
+			startGold=Number(document.getElementById("userGold").value);
+			lootBoxesNeeded.push(runSimulation(haveArr,startGold,maxItems,modnumber));
+			t3 = performance.now();
+			//kill if gone too long
+			if ((Math.floor(t3 - t0))/1000  > Number(document.getElementById("maxTime").value)){
+				break simulation_block;
+			}	
+		}
 	}
+	var t1 = performance.now();
+	console.log("Call to doSomething took " + (Math.floor(t1 - t0))/1000 + " seconds.");
 	//console.log(lootBoxesNeeded);
-	outputStatistics(lootBoxesNeeded);
+	outputStatistics(lootBoxesNeeded,(Math.floor(t1 - t0))/1000,i);
+	
 }
 
-function outputStatistics(lootBoxesNeeded) {
+function outputStatistics(lootBoxesNeeded,timeTaken,iterations) {
 	lootBoxesNeeded.sort()
 	var sum=0;
 	for (var i=0;i<lootBoxesNeeded.length;i++){
@@ -689,6 +780,8 @@ function outputStatistics(lootBoxesNeeded) {
 	}
 	document.getElementById("boxesNeededAvg").innerHTML=Math.floor(sum/lootBoxesNeeded.length); //
 	document.getElementById("boxesNeededMed").innerHTML=lootBoxesNeeded[Math.floor(lootBoxesNeeded.length/4)];
+	document.getElementById("timeTaken").innerHTML=timeTaken;
+	document.getElementById("nIterationsOut").innerHTML=iterations;
 	
 	var data = [
 		  {
@@ -860,7 +953,7 @@ updateCheckboxVar();
 </table>
 </p>
 <script>
-updateTable(); //initially create a table w/ ana's items!
+updateTable(); //initially create a table w/ ana's items!v
 </script>
 </body> 
 </html>
