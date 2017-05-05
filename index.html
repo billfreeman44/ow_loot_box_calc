@@ -847,7 +847,7 @@ function startSimulating(cont) {
 	var n_iter=Number(document.getElementById("nIterations").value);
 	var maxItems=Number(document.getElementById("maxBoxes").value)*4;
 	var maxTime=Number(document.getElementById("maxTime").value);
-	if (maxTime > 30) {maxTime=30};
+	if (maxTime > 20) {maxTime=20};
 	
 	// get spending habit
 	var spendarr = document.getElementsByName("spend");
@@ -905,8 +905,8 @@ function outputStatistics(lootBoxesNeeded,timeTaken,iterations) {
 	document.getElementById("boxesNeededRange").innerHTML=Math.floor(lootBoxesNeeded[Math.floor(lootBoxesNeeded.length*0.05)])+
 		'-'+Math.floor(lootBoxesNeeded[Math.floor(lootBoxesNeeded.length*0.95)]);
 	var postStr='';
-	if (lootBoxesNeeded.length < 400) { postStr=postStr+' The total number of iterations completed is very low ('+lootBoxesNeeded.length+').  Click on the "continue simulation" to add more iterations (you want at least ~500, preferably >1000) or increase the time allowed in the simulation options (top of page). ';}
-	if (timeTaken > 29) { postStr=postStr+' There is an upper limit of 30 seconds on time allowed.  More than that, pages begin to become "unresponsive".';}
+	if (lootBoxesNeeded.length < 500) { postStr=postStr+' The total number of iterations completed is very low ('+lootBoxesNeeded.length+').  Click on the "continue simulation" to add more iterations (you want at least ~500, preferably >1000) or increase the time allowed in the simulation options (top of page). ';}
+	if (timeTaken > 19) { postStr=postStr+' There is an upper limit of 20 seconds on time allowed.  More than that, pages begin to become "unresponsive".';}
 	
 	document.getElementById("postSimComment").innerHTML=postStr;
 	
