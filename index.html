@@ -145,7 +145,7 @@ Show items for: <select id="herodisplay" onclick="updateTable();">
 
 
 <div class="container" id='filters' style='display: none'>
-      <input type="checkbox" id="showSkins" onclick="updateTable();" checked> Show Skins <br>
+<input type="checkbox" id="showSkins" onclick="updateTable();" checked> Show Skins <br>
 <input type="checkbox" id="showEmotes" onclick="updateTable();" checked> Show Emotes <br>
 <input type="checkbox" id="showIntros" onclick="updateTable();" checked> Show Highlight Intros <br>
 <input type="checkbox" id="showPoses" onclick="updateTable();" checked> Show Victory Poses <br>
@@ -654,7 +654,8 @@ var probabilities={'common':5866,'rare':2741,'epic':467,'leg':189,
             'p-event':0.3};
 */
 
-//probabilities of getting each item in percent*10			
+/*
+//probabilities of getting each item in percent*100			
 var probAdj={'common':5866,'rare':2741,'epic':467,'leg':189, 
             'rare-currency':428,'epic-currency':255,'leg-currency':54, 
             'p-event':0.3};
@@ -667,6 +668,40 @@ probAdj['rare-currency']=probAdj['rare-currency']+probAdj['leg'];
 probAdj['epic-currency']=probAdj['epic-currency']+probAdj['rare-currency'];
 probAdj['leg-currency']=probAdj['leg-currency']+probAdj['epic-currency'];
 
+*/
+//probabilities of getting each item in percent*1000
+//common is 0 because it gets adjusted to "fill in"
+var probChina={'common':0,'rare':31690,'epic':4545,'leg':1852, 
+            'rare-currency':Math.floor(31690/rarebox.length),'epic-currency':Math.floor(4545/epicbox.length),'leg-currency':Math.floor(1852/legbox.length), 
+            'p-event':0.3};
+
+probChina['leg'] = probChina['leg']-probChina['leg-currency'];
+probChina['epic'] = probChina['epic']-probChina['epic-currency'];
+probChina['common'] = 100000 - (probChina['leg'] + probChina['epic'] + probChina['rare'] 
+ + probChina['rare-currency'] + probChina['epic-currency'] + probChina['leg-currency']);
+
+			
+console.log('pchina'+probChina['rare-currency']);
+console.log('pchina'+probChina['epic-currency']);
+console.log('pchina'+probChina['leg-currency']);
+console.log('pchina'+probChina['leg']);
+console.log('pchina'+probChina['epic']);
+console.log('pchina'+probChina['rare']);
+console.log('pchina'+probChina['common']);
+
+var probAdj=probChina;
+
+//adjust probability so that it just increases.
+probAdj['rare']=probAdj['rare']+probAdj['common'];
+probAdj['epic']=probAdj['epic']+probAdj['rare'];
+probAdj['leg']=probAdj['leg']+probAdj['epic'];
+probAdj['rare-currency']=probAdj['rare-currency']+probAdj['leg'];
+probAdj['epic-currency']=probAdj['epic-currency']+probAdj['rare-currency'];
+probAdj['leg-currency']=probAdj['leg-currency']+probAdj['epic-currency'];
+
+console.log('pchina'+probChina['leg-currency']);
+console.log('pchina'+probChina['leg-currency']);
+console.log('pchina'+probChina['leg-currency']);
 
 //get new item's rarity 
 function getNewItemRarity(){
@@ -893,7 +928,7 @@ function hideContinueButton() {
 
 function outputStatistics(lootBoxesNeeded,timeTaken,iterations) {
 	document.getElementById('simResults').style.display = 'block';
-	lootBoxesNeeded.sort();
+	lootBoxesNeeded.sort(function(a, b){return a-b});
 	var sum=0;
 	for (var i=0;i<lootBoxesNeeded.length;i++){
 		sum += lootBoxesNeeded[i];	
@@ -902,8 +937,9 @@ function outputStatistics(lootBoxesNeeded,timeTaken,iterations) {
 	document.getElementById("boxesNeededMed").innerHTML=Math.floor(lootBoxesNeeded[Math.floor(lootBoxesNeeded.length*0.5)]);
 	document.getElementById("timeTaken").innerHTML=timeTaken;
 	document.getElementById("nIterationsOut").innerHTML=iterations;
-	document.getElementById("boxesNeededRange").innerHTML=Math.floor(lootBoxesNeeded[Math.floor(lootBoxesNeeded.length*0.05)])+
-		'-'+Math.floor(lootBoxesNeeded[Math.floor(lootBoxesNeeded.length*0.95)]);
+	document.getElementById("boxesNeededRange").innerHTML=Math.round(lootBoxesNeeded[Math.floor(lootBoxesNeeded.length*0.05)])+
+		'-'+Math.round(lootBoxesNeeded[Math.floor(lootBoxesNeeded.length*0.95)]);
+	
 	var postStr='';
 	if (lootBoxesNeeded.length < 500) { postStr=postStr+' The total number of iterations completed is very low ('+lootBoxesNeeded.length+').  Click on the "continue simulation" to add more iterations (you want at least ~500, preferably >1000) or increase the time allowed in the simulation options (top of page). ';}
 	if (timeTaken > 19) { postStr=postStr+' There is an upper limit of 20 seconds on time allowed.  More than that, pages begin to become "unresponsive".';}
