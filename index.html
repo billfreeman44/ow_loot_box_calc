@@ -204,25 +204,24 @@ Max boxes: <input type="number" id="maxBoxes" value="3500" size="10" style="widt
  <br>
 -->
    </div>
-   <div class="column-right">
-Wanted Commons: <span id='wantedCommons'></span><br>
-Wanted Rares: <span id='wantedRares'></span><br>
-Wanted Epics: <span id='wantedEpics'></span><br>
-Wanted Legendaries: <span id='wantedLegs'></span><br>
-Wanted Icons: <span id='wantedIcons'></span><br>
-Total cost in gold: <span id='goldNeeded'></span><br>
-<br>
-<div id='goldAndButton'>
-Current gold: <input type="number" id="userGold" value="0" size="10" style="width: 50px"><br><br>
-
-<button onclick="startSimulating()">Start simulation</button><br><br>
+   <div>
+	Wanted Commons: <span id='wantedCommons'></span><br>
+	Wanted Rares: <span id='wantedRares'></span><br>
+	Wanted Epics: <span id='wantedEpics'></span><br>
+	Wanted Legendaries: <span id='wantedLegs'></span><br>
+	Wanted Icons: <span id='wantedIcons'></span><br>
+	Total cost in gold: <span id='goldNeeded'></span><br>
+	<br>
 </div>
-<div id='simResults' style='display: none'>
-Results of simulation:<br>
-Average # of loot boxes to get this: <span id='boxesNeededAvg'></span><br>
-Median # of loot boxes to get this: <span id='boxesNeededMed'></span><br>
-Iterations: <span id='nIterationsOut'>0</span><br>
-Time taken: <span id='timeTaken'>0</span> Seconds<br>
+
+<div id='goldAndButton'>
+	Current gold: <input type="number" id="userGold" value="0" size="10" style="width: 50px"><br><br>
+
+	<button onclick="startSimulating()">Start simulation</button><br><br>
+</div>
+
+<div id='simResults' style='display: none; width: 500px;'>
+The results are in! On average, it took <b><span id='boxesNeededAvg'>0</span> boxes</b> to get the items you wanted. This is an average, and the actual amount it will take depends on RNGesus!  90 percent of simulations took <b><span id='boxesNeededRange'>0</span> boxes</b> to finish (with a median of <b><span id='boxesNeededMed'>0</span></b>).  The simulation ran for <b><span id='nIterationsOut'>0</span> iterations</b> and took <b><span id='timeTaken'>0</span> Seconds</b>!<br>
 <br>
    
 <br>
@@ -885,16 +884,21 @@ function startSimulating() {
 }
 
 function outputStatistics(lootBoxesNeeded,timeTaken,iterations) {
+	document.getElementById('simResults').style.width = '500px';
 	document.getElementById('simResults').style.display = 'block';
+	document.getElementById('simResults').style.width = '500px';
 	lootBoxesNeeded.sort();
 	var sum=0;
 	for (var i=0;i<lootBoxesNeeded.length;i++){
 		sum += lootBoxesNeeded[i];	
 	}
 	document.getElementById("boxesNeededAvg").innerHTML=Math.floor(sum/lootBoxesNeeded.length); //
-	document.getElementById("boxesNeededMed").innerHTML=lootBoxesNeeded[Math.floor(lootBoxesNeeded.length/4)];
+	document.getElementById("boxesNeededMed").innerHTML=Math.floor(lootBoxesNeeded[Math.floor(lootBoxesNeeded.length*0.5)]);
 	document.getElementById("timeTaken").innerHTML=timeTaken;
 	document.getElementById("nIterationsOut").innerHTML=iterations;
+	document.getElementById("boxesNeededRange").innerHTML=Math.floor(lootBoxesNeeded[Math.floor(lootBoxesNeeded.length*0.05)])+
+		'-'+Math.floor(lootBoxesNeeded[Math.floor(lootBoxesNeeded.length*0.95)]);
+	
 	
 	var data = [
 		  {
@@ -1066,10 +1070,10 @@ function updateCheckboxVar() {
 </table>
 </p>
 <script>
-updateTable(); //initially create a table w/ ana's items!v
 updateCheckboxVar();
 clearCookie();
 updateDesired();
+updateTable(); //initially create a table w/ ana's items!v
 </script>
 </body> 
 </html>
