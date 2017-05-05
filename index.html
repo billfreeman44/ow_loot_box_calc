@@ -92,6 +92,8 @@ table.sortable tbody tr::before {
 <a href="#" onclick="toggleFilters();" id='filtersLink'>Show Filters</a> - 
 <a href="#" onclick="toggleOptions();" id='optionsLink'>Show Simulation Options</a> - 
 <a href="#" onclick="toggleSpendingHabits();" id='spendingLink'>Show Spending Strats</a> 
+<br>
+<br>
 <div id='helpDiv' style='display: none'>
 <p style=' width: 500px;'>This is a website to simulate 
 how many loot boxes it takes to get any selection 
@@ -137,10 +139,10 @@ Show items for: <select id="herodisplay" onclick="updateTable();">
     <option value="25">Icons/Sprays (All)</option>
     <option value="26">All Heroes</option>
   </select>
+  <br>
 </div>
 
-<br>
-<br>
+
 
 <div class="container" id='filters' style='display: none'>
       <input type="checkbox" id="showSkins" onclick="updateTable();" checked> Show Skins <br>
@@ -174,6 +176,7 @@ Show items for: <select id="herodisplay" onclick="updateTable();">
 <input type="radio" name="spend" value="buyHigh"> Buy expensive items when you can<br>
 <input type="radio" name="spend" value="buyLow"> Buy cheap items when you can<br>
 <input type="radio" name="spend" value="buyNone"> Don't buy anything <br>
+<br>
 
 </div>
 
@@ -186,13 +189,13 @@ Max boxes: <input type="number" id="maxBoxes" value="3500" size="10" style="widt
 </div>
 
 <p id='urlArea'>  </p>
-
+<!--
 <button onclick="updateCheckboxes('clearPageHave')">Clear "have it" on this page</button><br> 
 <button onclick="updateCheckboxes('clearPageWant')">Clear "want it" on this page</button><br> <br> 
 
 <button onclick="updateCheckboxes('checkPageHave')">Check "have it" on this page</button><br> 
 <button onclick="updateCheckboxes('checkPageWant')">Check "want it" on this page</button><br> <br> 
-<!--
+
 <button onclick="clearCookie()">Clear all "have it"</button><br> 
 <button onclick="clearCookie()">Clear all "want it"</button><br> <br> 
 
