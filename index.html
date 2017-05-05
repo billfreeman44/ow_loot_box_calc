@@ -188,7 +188,7 @@ Max boxes: <input type="number" id="maxBoxes" value="3500" size="10" style="widt
 <br>
 </div>
 
-<p id='urlArea'>  </p>
+<p id='urlArea'></p>
 <!--
 <button onclick="updateCheckboxes('clearPageHave')">Clear "have it" on this page</button><br> 
 <button onclick="updateCheckboxes('clearPageWant')">Clear "want it" on this page</button><br> <br> 
@@ -217,7 +217,7 @@ Max boxes: <input type="number" id="maxBoxes" value="3500" size="10" style="widt
 <div id='goldAndButton'>
 	Current gold: <input type="number" id="userGold" value="0" size="10" style="width: 50px"><br><br>
 
-	<button onclick="startSimulating()">Start simulation</button><br><br>
+	<button onclick="startSimulating()">Start simulation</button>  <button onclick="startSimulating(1)" id='continueSimulation' style='display: none'>Continue simulation</button>  <br><br>
 </div>
 
 <div id='simResults' style='display: none; width: 500px;'>
@@ -393,14 +393,14 @@ function outputCheckBox(def,ach,num,eve,hav) {
 	if (eve == 0 || eve == 3) {
 		if (hav) {
 			outstr+=' id="h'+num+'"';
-			outstr+=' onclick="toggleCheck(\'w'+num+'\',\'h'+num+'\');addCheckItemArr('+num+',1);makeUrl();updateDesired();"';
+			outstr+=' onclick="toggleCheck(\'w'+num+'\',\'h'+num+'\');addCheckItemArr('+num+',1);makeUrl();updateDesired();lootBoxesNeeded=[];hideContinueButton();"';
 			if (itemarr[num].ck == 1) {
 				outstr+=' checked>';
 			} else {
 				outstr+='>';
 			}
 		} else {
-			outstr+=' id="w'+num+'" onclick="addCheckItemArr('+num+',2);makeUrl();updateDesired();"';
+			outstr+=' id="w'+num+'" onclick="addCheckItemArr('+num+',2);makeUrl();updateDesired();lootBoxesNeeded=[];hideContinueButton();"';
 			if (itemarr[num].ck == 1) {
 				outstr+=' disabled="true" checked>';
 			} else { 
@@ -426,7 +426,7 @@ function outputCheckBox(def,ach,num,eve,hav) {
 	
 	} else {
 		outstr+=' id="w'+num+'"';
-		outstr+=' disabled="true"';
+		outstr+='  disabled="true"';
 		if (itemarr[num].ck == 1 || itemarr[num].ck == 2) {
 			outstr+=' checked>';
 		} else {
@@ -545,7 +545,7 @@ function updateCheckboxes(code) {
 		if (code == 'clearPageWant'){
 			if (displayHeroId ==  itemarr[i].he || displayHeroId == 26){
 				if (itemarr[i].ck==2 && showItemType(i) && showEvent(i) && showSpecial(i) && showRarity(i)){itemarr[i].ck=0;}
-			document.getElementById( "wantLink" ).setAttribute( "onClick", "javascript: updateCheckboxes('checkPageWant');" );
+			document.getElementById( "wantLink" ).setAttribute( "onClick", "javascript: updateCheckboxes('checkPageWant');lootBoxesNeeded=[];hideContinueButton();" );
 			}
 		}
 		if (code == 'clearPageHave'){
@@ -558,7 +558,7 @@ function updateCheckboxes(code) {
 				if (showItemType(i) && showEvent(i) && showSpecial(i) && showRarity(i)){itemarr[i].ck=2;}
 			}
 
-			document.getElementById( "wantLink" ).setAttribute( "onClick", "javascript: updateCheckboxes('clearPageWant');" );
+			document.getElementById( "wantLink" ).setAttribute( "onClick", "javascript: updateCheckboxes('clearPageWant');lootBoxesNeeded=[];hideContinueButton();" );
 			
 		}
 		if (code == 'checkPageHave'){
@@ -836,15 +836,18 @@ function average(arr){
 	return sum/arr.length;
 }
 
+var lootBoxesNeeded=[];
 
 //function to loop through many simulations
-function startSimulating() {
+function startSimulating(cont) {
 	var t0 = performance.now();
 	var t2 = performance.now();
 	var t3 = performance.now();
-	var lootBoxesNeeded=[];
+	if (!cont) {lootBoxesNeeded=[];}
 	var n_iter=Number(document.getElementById("nIterations").value);
 	var maxItems=Number(document.getElementById("maxBoxes").value)*4;
+	var maxTime=Number(document.getElementById("maxTime").value);
+	if (maxTime > 30) {maxTime=30};
 	
 	// get spending habit
 	var spendarr = document.getElementsByName("spend");
@@ -871,7 +874,7 @@ function startSimulating() {
 			lootBoxesNeeded.push(runSimulation(haveArr,startGold,maxItems,spendingStr));
 			t3 = performance.now();
 			//kill if gone too long
-			if ((Math.floor(t3 - t0))/1000  > Number(document.getElementById("maxTime").value)){
+			if ((Math.floor(t3 - t0))/1000  > maxTime) {
 				break simulation_block;
 			}	
 		}
@@ -880,8 +883,13 @@ function startSimulating() {
 	console.log("Call to doSomething took " + (Math.floor(t1 - t0))/1000 + " seconds.");
 	//console.log(lootBoxesNeeded);
 	outputStatistics(lootBoxesNeeded,(Math.floor(t1 - t0))/1000,i);
-	
+	document.getElementById('continueSimulation').style.display = 'inLine';
 }
+
+function hideContinueButton() {
+	document.getElementById('continueSimulation').style.display = 'none';
+	}
+
 
 function outputStatistics(lootBoxesNeeded,timeTaken,iterations) {
 	document.getElementById('simResults').style.width = '500px';
@@ -1053,7 +1061,7 @@ function updateCheckboxVar() {
 <p>
 <table class="sortable" id="withsymbolsbeforesorting"><thead><tr>
 <th class='sorttable_nosort'>Have it</th>
-<th class='sorttable_nosort'>Want it (<a href="#" onclick="updateCheckboxes('checkPageWant');" id='wantLink'>all</a>)</th>
+<th class='sorttable_nosort'>Want it (<a href="#" onclick="updateCheckboxes('checkPageWant');lootBoxesNeeded=[];hideContinueButton();" id='wantLink'>all</a>)</th>
 <th style="width: 60px;">Type</th>
 <th>Name</th>
 <th>Rarity</th>
