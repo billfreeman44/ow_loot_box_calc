@@ -67,10 +67,31 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 }
 
+table.sortable tbody {
+    counter-reset: sortabletablescope;
+}
+table.sortable thead tr::before {
+    content: "";
+    display: table-cell;
+	border: 1px solid black;
+	font-size:16px;
+}
+table.sortable tbody tr::before {
+    content: counter(sortabletablescope);
+    counter-increment: sortabletablescope;
+    display: table-cell;
+	border: 1px solid black;
+	font-size:16px;
+}
+
+
 </style>
 </head> 
 <body> 
-<a href="#" onclick="toggleHelp();" style='display: block;'> Show Help </a>
+<a href="#" onclick="toggleHelp();" id='helpDivLink'>Show Help</a> - 
+<a href="#" onclick="toggleFilters();" id='filtersLink'>Show Filters</a> - 
+<a href="#" onclick="toggleOptions();" id='optionsLink'>Show Simulation Options</a> - 
+<a href="#" onclick="toggleSpendingHabits();" id='spendingLink'>Show Spending Strats</a> 
 <div id='helpDiv' style='display: none'>
 <p style=' width: 500px;'>This is a website to simulate 
 how many loot boxes it takes to get any selection 
@@ -88,8 +109,7 @@ When you click on any check box your selections are saved on a cookie.  When you
 </div>
 
 <div class="container">
-   <div class="column-left">
-<select id="herodisplay" onclick="updateTable();">
+Show items for: <select id="herodisplay" onclick="updateTable();">
     <option value="1">Ana</option>
     <option value="2">Bastion</option>
     <option value="3">Dva</option>
@@ -114,63 +134,56 @@ When you click on any check box your selections are saved on a cookie.  When you
     <option value="22">Winston</option>
     <option value="23">Zarya</option>
     <option value="24">Zenyatta</option>
-    <option value="25">All Heroes (icons/sprays)</option>
-    <option value="26">Show everything</option>
+    <option value="25">Icons/Sprays (All)</option>
+    <option value="26">All Heroes</option>
   </select>
-
-   </div>
 </div>
 
 <br>
 <br>
 
-<div class="container">
-   <div class="column-left">
+<div class="container" id='filters' style='display: none'>
       <input type="checkbox" id="showSkins" onclick="updateTable();" checked> Show Skins <br>
 <input type="checkbox" id="showEmotes" onclick="updateTable();" checked> Show Emotes <br>
 <input type="checkbox" id="showIntros" onclick="updateTable();" checked> Show Highlight Intros <br>
 <input type="checkbox" id="showPoses" onclick="updateTable();" checked> Show Victory Poses <br>
 <input type="checkbox" id="showVoices" onclick="updateTable();" checked> Show Voice Lines <br>
-<input type="checkbox" id="showSprays" onclick="updateTable();"> Show Sprays <br>
-<input type="checkbox" id="showIcons" onclick="updateTable();"> Show Icons <br>
-   </div>
-   <div class="column-center">
+<input type="checkbox" id="showSprays" onclick="updateTable();" checked> Show Sprays <br>
+<input type="checkbox" id="showIcons" onclick="updateTable();" checked> Show Icons <br>
+<br>
+<input type="checkbox" id="showLegs" onclick="updateTable();" checked> Show Legendaries <br>
+<input type="checkbox" id="showEpics" onclick="updateTable();" checked> Show Epics <br>
+<input type="checkbox" id="showRares" onclick="updateTable();" checked> Show Rares <br>
+<input type="checkbox" id="showCommons" onclick="updateTable();" checked> Show Commons <br>
+<br>
 <input type="checkbox" id="showNonEvent" onclick="updateTable();" checked> Show Non-event items <br>
 <input type="checkbox" id="showUprising" onclick="updateTable();"> Show Uprising <br>
 <input type="checkbox" id="showEvents" onclick="updateTable();"> Show Other events <br>
-   </div>
-   <div class="column-right">
+<br>
 <input type="checkbox" id="showAchievement" onclick="updateTable();"> Show Achievement items <br>
 <input type="checkbox" id="showBlizzcon" onclick="updateTable();"> Show Items from Blizzcon <br>
 <input type="checkbox" id="showDefaultItems" onclick="updateTable();"> Show Default items <br>
 <input type="checkbox" id="showNormals" onclick="updateTable();" checked> Show Normal items <br>
 <br>
    </div>
+
+
+<div id='spendingHabits' style='display: none'>
+
+<input type="radio" name="spend" value="optimal" checked> Optimal spending (buy nothing until you can afford everything)<br>
+<input type="radio" name="spend" value="buyHigh"> Buy expensive items when you can<br>
+<input type="radio" name="spend" value="buyLow"> Buy cheap items when you can<br>
+<input type="radio" name="spend" value="buyNone"> Don't buy anything <br>
+
 </div>
 
+<div id='options' style='display: none'>
+Max iterations: <input type="number" id="nIterations" value="1500" size="10" style="width: 50px"><br><br>
+Max time (sec): <input type="number" id="maxTime" value="1.0" size="10" style="width: 50px"><br>
 <br>
+Max boxes: <input type="number" id="maxBoxes" value="3500" size="10" style="width: 50px"><br>
 <br>
-<br>
-<br>
-<br>
-
-<div class="container">
-   <div class="column-left">
-<center>SETTINGS</center><br>
-<p id='goldbox'> 
-Current gold: <input type="number" id="userGold" value="0" size="10" style="width: 50px"><br><br>
-Max iterations: <input type="number" id="nIterations" value="1000" size="10" style="width: 50px"><br><br>
-Max time (sec): <input type="number" id="maxTime" value="5" size="10" style="width: 50px"><br>
-</p>
-
-<button onclick="startSimulating()">Start simulation</button>
-<br>
-
-<p> 
-   </div>
-   <div class="column-center">
-
-<center>URL and Cookie stuff</center><br>
+</div>
 
 <p id='urlArea'>  </p>
 
@@ -179,18 +192,16 @@ Max time (sec): <input type="number" id="maxTime" value="5" size="10" style="wid
 
 <button onclick="updateCheckboxes('checkPageHave')">Check "have it" on this page</button><br> 
 <button onclick="updateCheckboxes('checkPageWant')">Check "want it" on this page</button><br> <br> 
-
+<!--
 <button onclick="clearCookie()">Clear all "have it"</button><br> 
 <button onclick="clearCookie()">Clear all "want it"</button><br> <br> 
 
 <button onclick="clearCookie()">Check all "have it"</button><br> 
 <button onclick="clearCookie()">Check all "want it"</button><br> <br> 
  <br>
-
+-->
    </div>
    <div class="column-right">
-
-<center>Simulation results!</center><br><br>
 Wanted Commons: <span id='wantedCommons'></span><br>
 Wanted Rares: <span id='wantedRares'></span><br>
 Wanted Epics: <span id='wantedEpics'></span><br>
@@ -198,6 +209,12 @@ Wanted Legendaries: <span id='wantedLegs'></span><br>
 Wanted Icons: <span id='wantedIcons'></span><br>
 Total cost in gold: <span id='goldNeeded'></span><br>
 <br>
+<div id='goldAndButton'>
+Current gold: <input type="number" id="userGold" value="0" size="10" style="width: 50px"><br><br>
+
+<button onclick="startSimulating()">Start simulation</button><br><br>
+</div>
+<div id='simResults' style='display: none'>
 Results of simulation:<br>
 Average # of loot boxes to get this: <span id='boxesNeededAvg'></span><br>
 Median # of loot boxes to get this: <span id='boxesNeededMed'></span><br>
@@ -205,14 +222,9 @@ Iterations: <span id='nIterationsOut'>0</span><br>
 Time taken: <span id='timeTaken'>0</span> Seconds<br>
 <br>
    
-   </div>
+<br>
+
 </div>
-
-
-
-<br><br><br>
-
-
 
 
 <div id="myDiv" style='width: 900px;'></div>
@@ -231,6 +243,37 @@ function toggleHelp() {
     }
 }
 
+function toggleFilters() {
+    var x = document.getElementById('filters');
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+		document.getElementById('options').style.display = 'none';
+		document.getElementById('spendingHabits').style.display = 'none';
+    } else {
+        x.style.display = 'none';
+    }
+}
+function toggleOptions() {
+    var x = document.getElementById('options');
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+		document.getElementById('filters').style.display = 'none';
+		document.getElementById('spendingHabits').style.display = 'none';
+    } else {
+        x.style.display = 'none';
+    }
+}
+
+function toggleSpendingHabits(){
+    var x = document.getElementById('spendingHabits');
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+		document.getElementById('filters').style.display = 'none';
+		document.getElementById('options').style.display = 'none';
+    } else {
+        x.style.display = 'none';
+    }
+}
 
 
 //stuff for checkboxes
@@ -414,16 +457,6 @@ function makeRow(itemNumber) {
 //output the hero ID that is selected w/ radio button.
 function heroSelected() {
 	return document.getElementById('herodisplay').value;
-	/*
-	for (var i=1;i<27;i++) {
-		console.log(i);
-		if (document.getElementById('heroNum'+i).checked == true) {
-		return i;
-		}
-	}
-	console.log('there was an invalid hero selected... defaulting to displaying ana!');
-	return 1; //error!!
-	*/
 }
 
 //return true if item should be shown based on its type
@@ -486,27 +519,49 @@ function showSpecial(i) {
 	return false;
 }
 
+//return true if item should be shown based on its achievement or blizcon or default
+function showRarity(i) {
+	var specialstr=numToRarity(itemarr[i].ra);
+	if (specialstr == 'legendary' && document.getElementById('showLegs').checked == true) {
+		return true;
+	}
+	if (specialstr == 'epic' && document.getElementById('showEpics').checked == true) {
+		return true;
+	}
+	if (specialstr == 'rare' && document.getElementById('showRares').checked == true) {
+		return true;
+	}
+	if (specialstr == 'common' && document.getElementById('showCommons').checked == true) {
+		return true;
+	}
+	return false;
+}
+
 function updateCheckboxes(code) {
 	var displayHeroId=heroSelected();
 	for (i=0;i<itemarr.length;i++) {
 		if (code == 'clearPageWant'){
 			if (displayHeroId ==  itemarr[i].he || displayHeroId == 26){
-				if (itemarr[i].ck==2 && showItemType(i) && showEvent(i) && showSpecial(i)){itemarr[i].ck=0;}
+				if (itemarr[i].ck==2 && showItemType(i) && showEvent(i) && showSpecial(i) && showRarity(i)){itemarr[i].ck=0;}
+			document.getElementById( "wantLink" ).setAttribute( "onClick", "javascript: updateCheckboxes('checkPageWant');" );
 			}
 		}
 		if (code == 'clearPageHave'){
 			if (displayHeroId ==  itemarr[i].he || displayHeroId == 26){
-				if (itemarr[i].ck==1 && showItemType(i) && showEvent(i) && showSpecial(i)){itemarr[i].ck=0;}
+				if (itemarr[i].ck==1 && showItemType(i) && showEvent(i) && showSpecial(i) && showRarity(i)){itemarr[i].ck=0;}
 			}			
 		}
 		if (code == 'checkPageWant'){
 			if (displayHeroId ==  itemarr[i].he || displayHeroId == 26){
-				if (showItemType(i) && showEvent(i) && showSpecial(i)){itemarr[i].ck=2;}
-			}			
+				if (showItemType(i) && showEvent(i) && showSpecial(i) && showRarity(i)){itemarr[i].ck=2;}
+			}
+
+			document.getElementById( "wantLink" ).setAttribute( "onClick", "javascript: updateCheckboxes('clearPageWant');" );
+			
 		}
 		if (code == 'checkPageHave'){
 			if (displayHeroId ==  itemarr[i].he || displayHeroId == 26){
-				if (showItemType(i) && showEvent(i) && showSpecial(i)){itemarr[i].ck=1;}
+				if (showItemType(i) && showEvent(i) && showSpecial(i) && showRarity(i)){itemarr[i].ck=1;}
 			}	
 		}
 		if (code == 'clearAllWant'){
@@ -536,7 +591,7 @@ function updateTable() {
 	
 	for (i=0;i<itemarr.length;i++) {
 		if (displayHeroId ==  itemarr[i].he || displayHeroId == 26) {
-			if (showItemType(i) && showEvent(i) && showSpecial(i)){
+			if (showItemType(i) && showEvent(i) && showSpecial(i) && showRarity(i)){
 				outputstr+='<tr>'+makeRow(i) +'</tr>';
 			}
 		}
@@ -586,6 +641,7 @@ function updateDesired() {
 <script>
 //simulation functions!
 var wantArrGlobal=[];
+var wantCostArrGlobal=[];
 //return random integer including entpoints
 function intBetween(bot,top){
 	return Math.floor(Math.random() * (top - bot + 1) + bot);
@@ -649,6 +705,16 @@ function calcWantArr() {
 	}
 	return outarr;
 }
+//figure out cost of items the user wants.
+function calcCostArr() {
+	var outarr=[];
+	for (var i=0;i<itemarr.length;i++){
+		if (itemarr[i].ck == 2 ) {
+			outarr.push(itemarr[i].co);
+		}
+	}
+	return outarr;
+}
 
 //figure out what items the user has.
 function calcHaveArr() {
@@ -671,12 +737,41 @@ function calcCost(wantArr){
 }
 
 
+function buyStuff(gold,spendingStr) {
+	if (spendingStr == 'optimal' || spendingStr == 'buyNone') {return gold;}
+	
+	if (spendingStr == 'buyLow') {
+		//icons are listed as 0 cost
+		//http://stackoverflow.com/questions/10557176/minimum-number-excluding-zero
+		var minCost=Math.min.apply(null, wantCostArrGlobal.filter(Boolean)); //infinity if all 0's (https://jsfiddle.net/gpLk9ntc/)
+		if (isFinite(minCost) && gold >= minCost) {
+			wantArrGlobal.splice(wantCostArrGlobal.indexOf(minCost),1);
+			wantCostArrGlobal.splice(wantCostArrGlobal.indexOf(minCost),1);
+			gold=gold-minCost;
+		}
+	}
+	
+	if (spendingStr == 'buyHigh') {
+		var maxCost=Math.max.apply(Math,wantCostArrGlobal);
+		if (gold >= maxCost && maxCost > 0) {
+			wantArrGlobal.splice(wantCostArrGlobal.indexOf(maxCost),1);
+			wantCostArrGlobal.splice(wantCostArrGlobal.indexOf(maxCost),1);
+			gold=gold-maxCost;
+		}
+	}
+	
+
+return gold;
+}
+
+
 //check if the simulation should be over
-function simulationOver(haveArr,gold) {
+function simulationOver(haveArr,gold,spendingStr) {
 
 		var i=0;
 		//check if you have all the items you want
 		if (wantArrGlobal.includes(haveArr[haveArr.length-1])){
+			wantCostArrGlobal.splice(wantArrGlobal.indexOf(haveArr[haveArr.length-1]),1);
 			wantArrGlobal.splice(wantArrGlobal.indexOf(haveArr[haveArr.length-1]),1);
 		}
 		if (wantArrGlobal.length == 0) {return true;}
@@ -689,7 +784,7 @@ function simulationOver(haveArr,gold) {
 		}
 		
 		//check if gold can buy the remaining items
-		if (gold >= calcCost(wantArrGlobal)) {
+		if (spendingStr != 'buyNone' && gold >= calcCost(wantArrGlobal)) {
 			//console.log('got gold '+gold+' dfsdf '+calcCost(wantArrGlobal));
 			return true;
 		}
@@ -698,14 +793,17 @@ function simulationOver(haveArr,gold) {
 }
 
 
+
+
 //runs a single simulation to see how many loot boxes
-function runSimulation(haveArr,startGold,maxItems) {
+function runSimulation(haveArr,startGold,maxItems,spendingStr) {
 
 	
 	var iterationNumber=0;
 	var itemRarity='';
-	while (simulationOver(haveArr,startGold,iterationNumber) == false && iterationNumber < maxItems){
-
+	while (simulationOver(haveArr,startGold,spendingStr) == false && iterationNumber < maxItems){
+	
+		startGold=buyStuff(startGold,spendingStr);
 		//console.log(wantArr.length);
 		//console.log('start gold '+startGold);
 		itemRarity=getNewItemRarity();
@@ -742,22 +840,33 @@ function startSimulating() {
 	var t0 = performance.now();
 	var t2 = performance.now();
 	var t3 = performance.now();
-	var n_iter=Number(document.getElementById("nIterations").value);
-	var maxItems=3000*4;
 	var lootBoxesNeeded=[];
+	var n_iter=Number(document.getElementById("nIterations").value);
+	var maxItems=Number(document.getElementById("maxBoxes").value)*4;
+	
+	// get spending habit
+	var spendarr = document.getElementsByName("spend");
+	var spendingStr;
+	for(var i = 0; i < spendarr.length; i++) {
+		if(spendarr[i].checked) {
+			spendingStr = spendarr[i].value;}
+	}
+	
+	console.log('spending str = '+spendingStr);
 	wantArrGlobal=calcWantArr();
+	wantCostArrGlobal=calcCostArr();
 	//var wantArr=calcWantArr();
 	var haveArr=calcHaveArr();
-	var modnumber=4;
 	console.log(wantArrGlobal);
 	console.log(haveArr);
 	var startGold=Number(document.getElementById("userGold").value);
 	simulation_block: {
 		for (var i=0;i<n_iter;i++){
 			wantArrGlobal=calcWantArr();
+			wantCostArrGlobal=calcCostArr();
 			haveArr=calcHaveArr();
 			startGold=Number(document.getElementById("userGold").value);
-			lootBoxesNeeded.push(runSimulation(haveArr,startGold,maxItems,modnumber));
+			lootBoxesNeeded.push(runSimulation(haveArr,startGold,maxItems,spendingStr));
 			t3 = performance.now();
 			//kill if gone too long
 			if ((Math.floor(t3 - t0))/1000  > Number(document.getElementById("maxTime").value)){
@@ -773,7 +882,8 @@ function startSimulating() {
 }
 
 function outputStatistics(lootBoxesNeeded,timeTaken,iterations) {
-	lootBoxesNeeded.sort()
+	document.getElementById('simResults').style.display = 'block';
+	lootBoxesNeeded.sort();
 	var sum=0;
 	for (var i=0;i<lootBoxesNeeded.length;i++){
 		sum += lootBoxesNeeded[i];	
@@ -865,10 +975,10 @@ function makeUrl(){
     }
     outstr = outstr.substring(0, outstr.length - 1);
     document.getElementById("urlArea").innerHTML=
-    "<a href='https://billfreeman44.github.io/ow_loot_box_calc/index.html?checked="+outstr+"'>save this to bookmarks to save what items are checked</a>";
+    "<a href='https://billfreeman44.github.io/ow_loot_box_calc/index.html?checked="+outstr+"'>Bookmark this link to save current selection</a>";
 	
 	//also save to cookies
-	saveSelectedToCookies();
+	//saveSelectedToCookies();
 	
 }
 
@@ -881,7 +991,7 @@ function saveSelectedToCookies() {
         }
         
     }
-	setCookie("checked", outstr.substring(0, outstr.length - 1), 30);
+	//setCookie("checked", outstr.substring(0, outstr.length - 1), 30);
 	
 	
 }
@@ -928,15 +1038,15 @@ function updateCheckboxVar() {
 	}
 }
 
-restoreCookieStuff();
-updateCheckboxVar();
+//restoreCookieStuff();
+
 
 </script>
 
 <p>
 <table class="sortable" id="withsymbolsbeforesorting"><thead><tr>
-<th>Have it</th>
-<th >Want it</th>
+<th class='sorttable_nosort'>Have it</th>
+<th class='sorttable_nosort'>Want it (<a href="#" onclick="updateCheckboxes('checkPageWant');" id='wantLink'>all</a>)</th>
 <th style="width: 60px;">Type</th>
 <th>Name</th>
 <th>Rarity</th>
@@ -954,6 +1064,9 @@ updateCheckboxVar();
 </p>
 <script>
 updateTable(); //initially create a table w/ ana's items!v
+updateCheckboxVar();
+clearCookie();
+updateDesired();
 </script>
 </body> 
 </html>
