@@ -137,7 +137,7 @@ Show items for: <select id="herodisplay" onclick="updateTable();">
     <option value="23">Zarya</option>
     <option value="24">Zenyatta</option>
     <option value="25">Icons/Sprays (All)</option>
-    <option value="26">All Heroes</option>
+    <option value="26">EVERYTHING</option>
   </select>
   <br>
 </div>
@@ -221,7 +221,7 @@ Max boxes: <input type="number" id="maxBoxes" value="3500" size="10" style="widt
 </div>
 
 <div id='simResults' style='display: none; width: 500px;'>
-The results are in! On average, it took <b><span id='boxesNeededAvg'>0</span> boxes</b> to get the items you wanted. This is an average, and the actual amount it will take depends on RNGesus!  90 percent of simulations took <b><span id='boxesNeededRange'>0</span> boxes</b> to finish (with a median of <b><span id='boxesNeededMed'>0</span></b>).  The simulation ran for <b><span id='nIterationsOut'>0</span> iterations</b> and took <b><span id='timeTaken'>0</span> Seconds</b>!<br>
+The results are in! On average, it took <b><span id='boxesNeededAvg'>0</span> boxes</b> to get the items you wanted. This is an average, and the actual amount it will take depends on RNGesus!  90 percent of simulations took <b><span id='boxesNeededRange'>0</span> boxes</b> to finish (with a median of <b><span id='boxesNeededMed'>0</span></b>).  The simulation ran for <b><span id='nIterationsOut'>0</span> iterations</b> and took <b><span id='timeTaken'>0</span> Seconds</b>!  <span id='postSimComment' style='color: red;'></span><br>
 <br>
    
 <br>
@@ -892,9 +892,7 @@ function hideContinueButton() {
 
 
 function outputStatistics(lootBoxesNeeded,timeTaken,iterations) {
-	document.getElementById('simResults').style.width = '500px';
 	document.getElementById('simResults').style.display = 'block';
-	document.getElementById('simResults').style.width = '500px';
 	lootBoxesNeeded.sort();
 	var sum=0;
 	for (var i=0;i<lootBoxesNeeded.length;i++){
@@ -906,6 +904,11 @@ function outputStatistics(lootBoxesNeeded,timeTaken,iterations) {
 	document.getElementById("nIterationsOut").innerHTML=iterations;
 	document.getElementById("boxesNeededRange").innerHTML=Math.floor(lootBoxesNeeded[Math.floor(lootBoxesNeeded.length*0.05)])+
 		'-'+Math.floor(lootBoxesNeeded[Math.floor(lootBoxesNeeded.length*0.95)]);
+	var postStr='';
+	if (lootBoxesNeeded.length < 400) { postStr=postStr+' The total number of iterations completed is very low ('+lootBoxesNeeded.length+').  Click on the "continue simulation" to add more iterations (you want at least ~500, preferably >1000) or increase the time allowed in the simulation options (top of page). ';}
+	if (timeTaken > 29) { postStr=postStr+' There is an upper limit of 30 seconds on time allowed.  More than that, pages begin to become "unresponsive".';}
+	
+	document.getElementById("postSimComment").innerHTML=postStr;
 	
 	
 	var data = [
