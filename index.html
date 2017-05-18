@@ -8,6 +8,7 @@
 <script src="sorttable.js"></script>
 <script src="plotly-latest.min.js"></script>
 
+
 <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
 <title>Item table for Overwatch</title> 
 <style>
@@ -33,7 +34,7 @@ padding-right:30px;
 
 body {
 font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-font-size:16px;
+font-size:18px;
 line-height:1.42857143;
 color:#333;
 background-color:#fff;
@@ -85,31 +86,66 @@ table.sortable tbody tr::before {
 }
 
 
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+a {
+font-size:14px;
+   color: #6666ff;
+   text-decoration: none; // changed from text-decoration:underline
+}
+a:hover {
+   color: #3333ff;
+   text-decoration: underline; // changed from text:decoration:none
+}
+
 </style>
 </head> 
 <body> 
-<a href="#" onclick="toggleHelp();" id='helpDivLink'>Show Help</a> - 
-<a href="#" onclick="toggleFilters();" id='filtersLink'>Show Filters</a> - 
-<a href="#" onclick="toggleOptions();" id='optionsLink'>Show Simulation Options</a> - 
-<a href="#" onclick="toggleSpendingHabits();" id='spendingLink'>Show Spending Strats</a> - 
+<a href="#" id='hBtn'>Show Help</a> - 
+<a href="#" id='fBtn'>Show Filters</a> - 
+<a href="#" id='oBtn'>Show Simulation Options</a> - 
+<a href="#" id='sBtn'>Show Spending Strats</a> - 
 <a href="mailto:billfreeman44@yahoo.com?Subject=Loot-Box%20websit">Contact/Feedback</a> 
 <br>
 <br>
-<div id='helpDiv' style='display: none'>
-<p style=' width: 500px;'>This is a website to simulate 
-how many loot boxes it takes to get any selection 
-of items in overwatch.  </p> 
-<ol><li> Select the items that you already have ("have it" column).  
-<li> Select the items that you want ("want it" column).
-<li> Input the amount of gold you have. 
-<li> Click the "start simulation" button and thats it! 
-</ol>
-<p style=' width: 500px;'>
-When you click on any check box your selections are saved on a cookie.  When you come back, your selections are restored from the cookie.  Click the "clear saved checks" button to delete your cookie and then reload the page to start fresh.  In addition to a cookie, a link is created that saves your selections.  Bookmark this link to save that particular selection.<br><br>
 
-
-</p> 
-</div>
 
 <div class="container">
 Show items for: <select id="herodisplay" onclick="updateTable();">
@@ -145,7 +181,36 @@ Show items for: <select id="herodisplay" onclick="updateTable();">
 
 
 
-<div class="container" id='filters' style='display: none'>
+<!-- The Modal -->
+<div id="helpModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close" id="hclose">&times;</span>
+    <p>
+
+This is a website to simulate 
+how many loot boxes it takes to get any selection 
+of items in overwatch.  
+<ol><li> Select the items that you already have ("have it" column).  
+<li> Select the items that you want ("want it" column).
+<li> Input the amount of gold you have. 
+<li> Click the "start simulation" button and thats it! 
+</ol>
+<p>
+When you click on any check box your selections are saved on a cookie.  When you come back, your selections are restored from the cookie.  Click the "clear saved checks" button to delete your cookie and then reload the page to start fresh.  In addition to a cookie, a link is created that saves your selections.  Bookmark this link to save that particular selection.
+
+</p> 
+  </div>
+
+</div>
+
+
+<div id="filtersModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="fclose">&times;</span>
+    <p>
+
 <input type="checkbox" id="showSkins" onclick="updateTable();" checked> Show Skins <br>
 <input type="checkbox" id="showEmotes" onclick="updateTable();" checked> Show Emotes <br>
 <input type="checkbox" id="showIntros" onclick="updateTable();" checked> Show Highlight Intros <br>
@@ -168,26 +233,55 @@ Show items for: <select id="herodisplay" onclick="updateTable();">
 <input type="checkbox" id="showDefaultItems" onclick="updateTable();"> Show Default items <br>
 <input type="checkbox" id="showNormals" onclick="updateTable();" checked> Show Normal items <br>
 <br>
-   </div>
-
-
-<div id='spendingHabits' style='display: none'>
-
-<input type="radio" name="spend" value="optimal" checked> Optimal spending (buy nothing until you can afford everything)<br>
-<input type="radio" name="spend" value="buyHigh"> Buy expensive items when you can<br>
-<input type="radio" name="spend" value="buyLow"> Buy cheap items when you can<br>
-<input type="radio" name="spend" value="buyNone"> Don't buy anything <br>
-<br>
+	</p>
+  </div>
 
 </div>
 
-<div id='options' style='display: none'>
+
+<div id="optionsModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="oclose">&times;</span>
+    <p>
+
 Max iterations: <input type="number" id="nIterations" value="1500" size="10" style="width: 50px"><br><br>
 Max time (sec): <input type="number" id="maxTime" value="1.0" size="10" style="width: 50px"><br>
 <br>
 Max boxes: <input type="number" id="maxBoxes" value="3500" size="10" style="width: 50px"><br>
 <br>
+	</p>
+  </div>
+
 </div>
+
+
+<div id="spendingModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="sclose">&times;</span>
+    <p>
+	
+<input type="radio" name="spend" value="optimal" onclick="lootBoxesNeeded=[];hideContinueButton();" checked> Optimal spending (buy nothing until you can afford everything)<br>
+<input type="radio" name="spend" value="buyHigh" onclick="lootBoxesNeeded=[];hideContinueButton();"> Buy expensive items when you can<br>
+<input type="radio" name="spend" value="buyLow" onclick="lootBoxesNeeded=[];hideContinueButton();"> Buy cheap items when you can<br>
+<input type="radio" name="spend" value="buyNone" onclick="lootBoxesNeeded=[];hideContinueButton();"> Don't buy anything <br>
+<br>
+
+	</p>
+  </div>
+
+</div>
+
+
+<div id="contactModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>
+
+	</p>
+  </div>
+
+</div>
+
 
 <p id='urlArea'></p>
 <!--
@@ -1098,7 +1192,7 @@ function updateCheckboxVar() {
 <p>
 <table class="sortable" id="withsymbolsbeforesorting"><thead><tr>
 <th class='sorttable_nosort'>Have it</th>
-<th class='sorttable_nosort'>Want it (<a href="#" onclick="updateCheckboxes('checkPageWant');lootBoxesNeeded=[];hideContinueButton();" id='wantLink'>all</a>)</th>
+<th class='sorttable_nosort'>Want it (<a href="javaScript:void(0);" onclick="updateCheckboxes('checkPageWant');lootBoxesNeeded=[];hideContinueButton();" id='wantLink'>all</a>)</th>
 <th style="width: 60px;">Type</th>
 <th>Name</th>
 <th>Rarity</th>
@@ -1121,6 +1215,82 @@ updateDesired();
 updateTable(); //initially create a table w/ ana's items!v
 </script>
 
+
+<script>
+// Get the modal
+var hmodal = document.getElementById('helpModal');
+var fmodal = document.getElementById('filtersModal');
+var omodal = document.getElementById('optionsModal');
+var smodal = document.getElementById('spendingModal');
+
+// Get the button that opens the modal
+var hbtn = document.getElementById("hBtn");
+var fbtn = document.getElementById("fBtn");
+var obtn = document.getElementById("oBtn");
+var sbtn = document.getElementById("sBtn");
+
+// Get the <span> element that closes the modal
+var hspan = document.getElementById("hclose");
+var fspan = document.getElementById("fclose");
+var ospan = document.getElementById("oclose");
+var sspan = document.getElementById("sclose");
+
+// When the user clicks on the button, open the modal 
+hbtn.onclick = function() {
+    hmodal.style.display = "block";
+}
+
+fbtn.onclick = function() {
+    fmodal.style.display = "block";
+}
+
+obtn.onclick = function() {
+    omodal.style.display = "block";
+}
+
+sbtn.onclick = function() {
+    smodal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+hspan.onclick = function() {
+	console.log('hspan click');
+    hmodal.style.display = "none";
+}
+fspan.onclick = function() {
+    fmodal.style.display = "none";
+}
+ospan.onclick = function() {
+    omodal.style.display = "none";
+}
+sspan.onclick = function() {
+    smodal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == hmodal) {
+        hmodal.style.display = "none";
+		}
+    if (event.target == fmodal) {
+        fmodal.style.display = "none";
+		}
+    if (event.target == omodal) {
+        omodal.style.display = "none";
+		}
+    if (event.target == smodal) {
+        smodal.style.display = "none";
+		}
+}
+</script>
+
+
+
+
+
+
+
+
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -1131,6 +1301,10 @@ updateTable(); //initially create a table w/ ana's items!v
   ga('send', 'pageview');
 
 </script>
+
+
+
+
 
 
 </body> 
