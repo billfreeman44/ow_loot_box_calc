@@ -7,7 +7,88 @@
   <meta http-equiv="pragma" content="no-cache">
 <script src="sorttable.js"></script>
 <script src="plotly-latest.min.js"></script>
+<!--
 
+                                  `                               ` `      ``.`````.``.```                                                            
+                                                      `.-////:+:/+++/os+osshhhhyhyyyyhhyso+///:---.`                                                  
+                                                      +yssyyyyhhhhyyyyyyyyyhyhhhhhhhyyyyyyhhhhdddhhhy++-`                                             
+                                                    `:ssyyyyyyhhyyyyhysssssyhyhhhyhhhyyysyhhhdddddhyyhyyo/.`.`                                        
+                                                  -+syssyyyyyyyyyhhhyysssyyhhyyyyyyyyysoosyhhhhdhhhyhysssyhyyyss/.`                                   
+                                          ````.:/yhhhhhhddddddddhdddhhhhhhhyyysysyyssssoo+ssyyyyyhhhyhhyyyyssyyyyyo.                                  
+                                     .--/+yyyyyhhhhhhhhddddddddddddddhhhyyhyysssyssssoosysyyyyyssyhhyyhhyyssyysssyyo.                                 
+                              -++syhyyyyhhyhhhhhhhhhhdhdddhhddhhhdhhhhhhhhyyyyssssssssssyhhhdddhhhhhyyyyyss+osso+oyy+                                 
+                           -+yddhdhhhhhhhhhhhyyyhhdddmmmmmddddhdddddddhhdddhhyyyysssyyyssyhhdddmddddhyyyysssssooosyyh/                                
+                         `smmmmhhhddddmmddhhhhhhdddmmmmmmmmddhhhddhddddhdddddddhhhhyhhhyyyyyhddmmddddhhdhhhysssooooshd:                               
+                         /dmmmdddmmmmmddhhhhhdddmmmmmmmmmdddhhhhhyyyhhhyyhhhyhhhhhdhhhhhhhhhhhhddmmmmdddhdddhyyssoooshh/`                             
+                         ommmdddmmmmmddhhhhhddmmmmmmmmmmdddhyysssssssooooosssssyyyhhhhyyyyyyyhhhdddmmmddddddmmdhhyyooosyy+-.`                         
+                        .ydhdddmmmdddddddddmmmmmmmmmmmdddhyysso++ooo++//+/+ooooossssyyyyyyyyyyhhhhddmmmddddmmmmmmddhhysoosyhy-                        
+                      `.ydddddmmmmdddddmmmmmmmmmmmmmmddhhyso++///////:::::///+++ooooossssssssyyyyhhhddmmmdddddmmmmmmmmddysoss-                        
+                      :shhddmmmmmmddddddmmmmmmmmmmdddhyyyso+/::::::-------::::///++++ooooosssssssyyyhdmmmdddhddmmmmmmmmmhyos/                         
+                      ohhhddmmmmmmmddddddddmmdddddhhysso+////:-:::---.-------:::://///+o++ooooossssyyyhdmmddddddmmmNNNNmdysy/                         
+                     .yhhddmmmmmmmdddddddddddhhhyyyso++///::---------.--------::::::::///++++++ooosssyyhddmddddmmNNNNNmmdhhy.                         
+                     .yyhddmmNNmmmmdddddhhhhhhyysso++//::--.............-------:---::::////++++oooossssyhddmdddmNNNNNNmmmdhy/                         
+                      +yhhdmNNNNmmmdddddddhhysssoo+//:-....................----------:::///+++ooooosssyyyhddddddmNNNNNmmhyyy:                         
+                      .hhdmNNNNNmmddddmmddhyso+++/:--............```....`.....----:::::////+++ooooossyyyyhhddhdmmmNNNmdhysoo:`                        
+                      :hdmNNNNNNmmdddmmmdhs+///::-...............````........-----:::::////+++oooosssyyyyyhhhdddmmmmmddhyyso:`                        
+                     `ohmNNNNNNNmmdddmmmds+///:---...............````......------::::://///++++oooossyhhhhhhhddmmNmNmdhysys+-                         
+                     -hhdmmNNNNNNmmdhdddho///::-------.........`````````...-------:::::://+++++++oossyhhhhhhdddmmmmmmddhyyy+-                         
+                     `/hddmmNNNNNmmdhhhhy+///:::-------..........````.......----::::::::///++++++oossyhhhdddddmmmmmmmdhhhhs/                          
+                       .yddmNNNNNNmdhhhys+//:::::------...................-------------:////++++oosssyhhdddmmmmmmNmmdddhyho- `                        
+                        `+ddmmmNNNmddhhys+//::::::------.....---........--....--------::::/++ooooossyyhhdddmmmmmmNmmmdhddhs` `                        
+                         `:sdmmNNNNmmdhys++//::::--------.....................--...--::/+osyyyyysssyyyyhhddddmmNNNNmmmdddho                           
+                            -hmmNNNNmmdhyo+//::::-----......................----::/+osyyhhddddddhhhhhhyhhhdddddmNNNmmNNmdhs``                         
+                             :ddmNNNNNmdyo+//:::::-----.....`......--:::::::/++ooyhddddddmmmmddddhhddddhhddhhyyyhhmmmNNNmh:                           
+                              /ydmNNNNmdhs++/::::::::--:-:::://///::://////+ssssyhhdddddddddddddddddmmmmNNNmddddmmNNNNNNhho:``                        
+                               `hdmNNNmmds++////+oossoossyyhhyyssso+////://+ossyyyyyhhhhhdhhhyyysssyyhddNmNNNNNNNNNNNNNmdddho+:.                      
+                                :hdNNNmmds+++++sssyhhhdddddddhhyyso+/::::/+ossyhhhhyhhdhysoooosyyhhyhhddmNNNNNNNNNNNNNNNmddddddhysos.                 
+                                 +sdNNNmdo+++osyyssyyyyyyyhhhhyysso+/:::/oyhddhhyyyhhyo++syhhhhhyhhhhddddmNmdhhhddmmNNmmmmmmmddddddyo                 
+                                 .ohmNNNdo++osyyhyyyysyyyyyhhddhhhdddddmmmmmhyyyyyhsooyyyhddmmmddmmdhhhdddNhhhhhhhdmmmmmmmmmmdddddhyso`               
+                                  :odNNNmhdddhyssooosoo+++ooosssssymNNNNNNNNdhhhysooyhso+oydhhhhhddmddhhyhmyyyyhhhddmmmmmmmmmmddddhysyy`              
+                                  :syNNNmdyoossooosoosydddmmdyyysoodNms+/+ymmhhyyssooo+////+ooooosyhddhyshmssyhhhhddmmNNmmmmmmdddhhysyd.              
+                                  /hmNNNhmy+ossoosyhdyshdddhyoosso+yN+---:/odmhsooo+++++++++ooosssyyhyyysdhssyhdddddmmmNNmmmmmdddhyyshm.              
+                                 -oodNNNdmy++ooosyddho+osyso////+//yh:----:/smmho++/////+++oossssyyssssshyoosyhdmmmmmmNNmmmmmddddhyyydm.              
+                                +++oyhmNmdho+++oosyyo++////++oo+/::ho-----:/oydmds+///::://///++++ossssso++osyhdmmmmmmNNNmmmmddddhhhhdh`              
+                               .ssyyhyyNNddysoo+oooo++++++ooo+/:--/m+-..--:/oyhyhdhyso++++++ooossoo++//+++ossyhdmmmmmmmNNmmmmmmdddhhdd:               
+                               -s//+++smNmhhhyso+++++++oo++/:----/hh/--.--:/osyyssyhdhyso+/::::::::///+++osyyhhdmmmmmmNNNNmmmmmdddhddh`               
+                               `+/::///hdddyhhyo///:::::------:+ydh+:--.--:/+oyyysssssyssoo+++++++ooosssssyyhhddmmmmmmNNNmmmmmmmddhdd:                
+                                ./:--:/sdyhdhyo+/::::::://++oosyyho::-..--://oshhyssso++///:::---:://++osyyhddddmmmmmNNNmmmmmmmdddhdo                 
+                                 ::---:odhsosssooo+++++////++osso+/::-...-::/+syysosso+::--......--:://+osyhhddmmmmmmmNNmmmmmmmmdhho                  
+                                 `-:--::ydyo++/++///++oo++//::---::::-..-::/+oyysoooos+::---...---:://+oosyhhdddmmmmmmNNmmmmmmmdhho`                  
+                                   -:-:-/dhso+/+oooo/:-........--::://::::/+shddhysssys+::------:://++oosyyhddddmmmmmmNmmmmmmmdhy/                    
+                                    `:::-ydyo++///::-........----:/+ss+/++osydmNNmmddhdy+/:---::://++oossyhddddmmmmmmmmmmmmmmds/`                     
+                                     `/::ohds+++///::---..---:::-:oydmysshdddmmmmmmmdddho+::-:://+++oossyhdddddmmmmNNNNmhsys+.`                       
+                                     `++//syyo+++///::::---:::::--:shhysydmmmmmmmddhhyyso+//:://++ooossyyhdddddmmmmmNNNs` `    `                      
+                                      -oo/:/sso++++/////:::::::----:/+++oshdddddhhyyssooo+++++++++oosssyyhddddmmmmmmNmNo`                             
+                                       `/o/:/sooo++++///////::----:://+++ossyyssssssssooooooo+ooooossossyhhddddmmmmmNNmh.                             
+                                         .///osoo++++++++///::::::://++++oossso++oooosssssssoooossssooossyhddddmmmmmmmds`                             
+                                           :/+osoo+++++++/////////++++++//+++/:://+oossyyhhyysssyyssoossyyddddmmmmmmmmd/                              
+                                            `.:osoo++++/////////+++o+++////::::+oyyyyyhhhddddhhhhysoooosyhddddmmmmmmNmh. `                            
+                                               `ooo++++//////+++ossooooshhhhhhddmmmmmmmNNNNmmdhyssoooosyhddmmdmmmmmmNmy                               
+                                               .soooo++/////++osyhhhhdmmNNNmNNNNmmmmmmdddhhyysooooo+oosyhdmmmmmmmmmmmd+                               
+                                                +sooooo+////+oshdhsosyyyyyyssssssoooo+++oossso++ooooooshddmmmmmmmmmmmm.                               
+                                                -soooooo+///+osso////////:::::::::://++oosyysooooo++ooshdmmmmmmmmmmmmo                                
+                                                `ossoooooo+++ooo+/:/++//////////+++ooossyyysoooo++++ooyhdmmmmmmmmmmh/                                 
+                                                 :yysooooooooo+/::///++++oossssyssssssyyysoo++++++++osydmmmmmmmmmh-`                                  
+                                                  /yhyoooooo+++////::/+ooosssssooooooooo+++++++oo++osyhmmmmmmmy+-`                                    
+                                                   -ohysooooo+/////::://++++//////////////++++oooosyhdmmmmmdo-                                        
+                                                     -shysooo++/////::::::/::::--:://///++/++oossyhdmmmmdo..                                          
+                                                       -+syssoo+/////::://::----:://///+++++oosyhdmmmh+:`                                             
+                                                         `-/syyso++++/////////////////++ooooyhhdmmdo-`                                                
+                                                            `+yhhysoo+++/////++++++++oossyydmmmdo-.                                                   
+                                                              `.:sddhysoooo++oooossssyhhddmmmo:`                                                      
+                                                                  .ohddhhyyyyyyyyyhhdmmmmys-.                                                         
+                                                                     `/ssohydyysydmmho:.-                                                             
+                                                                                  ``      `                                                           
+																				
+																				
+																				
+															PAPA KAPLAN SAYS TO BUY MORE LOOT BOXES	
+
+
+
+
+
+-->
 
 <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
 <title>Item table for Overwatch</title> 
