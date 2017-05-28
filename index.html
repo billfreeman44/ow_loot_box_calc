@@ -204,12 +204,11 @@ a:hover {
 </style>
 </head> 
 <body> 
-<a href="#" id='hBtn'>Show Help</a> - 
-<a href="#" id='fBtn'>Show Filters</a> - 
-<a href="#" id='oBtn'>Show Simulation Options</a> - 
-<a href="#" id='sBtn'>Show Spending Strats</a> - 
+<a href="#" id='hBtn'>Help</a> - 
+<a href="#" id='fBtn'>Filters</a> - 
+<a href="#" id='oBtn'>Simulation Options</a> - 
+<a href="#" id='sBtn'>Spending Strats</a> - 
 <a href="mailto:billfreeman44@yahoo.com?Subject=Loot-Box%20websit">Contact/Feedback</a> 
-<br>
 <br>
 
 
@@ -242,8 +241,44 @@ Show items for: <select id="herodisplay" onclick="updateTable();">
     <option value="25">Icons/Sprays (All)</option>
     <option value="26">EVERYTHING</option>
   </select>
-  <br>
 </div>
+
+
+
+
+<span id='urlArea'>&nbsp;</span>
+<!--
+<button onclick="updateCheckboxes('clearPageHave')">Clear "have it" on this page</button><br> 
+<button onclick="updateCheckboxes('clearPageWant')">Clear "want it" on this page</button><br> <br> 
+
+<button onclick="updateCheckboxes('checkPageHave')">Check "have it" on this page</button><br> 
+<button onclick="updateCheckboxes('checkPageWant')">Check "want it" on this page</button><br> <br> 
+
+<button onclick="clearCookie()">Clear all "have it"</button><br> 
+<button onclick="clearCookie()">Clear all "want it"</button><br> <br> 
+
+<button onclick="clearCookie()">Check all "have it"</button><br> 
+<button onclick="clearCookie()">Check all "want it"</button><br> <br> 
+ <br>
+-->
+   </div>
+   <div>
+	Wanted Commons: <span id='wantedCommons'></span><br>
+	Wanted Rares: <span id='wantedRares'></span><br>
+	Wanted Epics: <span id='wantedEpics'></span><br>
+	Wanted Legendaries: <span id='wantedLegs'></span><br>
+	Wanted Icons: <span id='wantedIcons'></span><br>
+	Total cost in gold: <span id='goldNeeded'></span><br>
+</div>
+
+<div id='goldAndButton'>
+	Current gold: <input type="number" id="userGold" value="0" size="10" style="width: 50px"><br>
+
+	<button onclick="startSimulating()">Start simulation</button>    <br>
+</div>
+
+
+
 
 
 
@@ -254,19 +289,18 @@ Show items for: <select id="herodisplay" onclick="updateTable();">
   <div class="modal-content">
     <span class="close" id="hclose">&times;</span>
     <p>
-
-This is a website to simulate 
-how many loot boxes it takes to get any selection 
-of items in overwatch.  
-<ol><li> Select the items that you already have ("have it" column).  
-<li> Select the items that you want ("want it" column).
-<li> Input the amount of gold you have. 
-<li> Click the "start simulation" button and thats it! 
-</ol>
-<p>
-When you click on any check box your selections are saved on a cookie.  When you come back, your selections are restored from the cookie.  Click the "clear saved checks" button to delete your cookie and then reload the page to start fresh.  In addition to a cookie, a link is created that saves your selections.  Bookmark this link to save that particular selection.
-
-</p> 
+		This is a website to simulate 
+		how many loot boxes it takes to get any selection 
+		of items in overwatch.  
+		<ol><li> Select the items that you already have ("have it" column).  
+		<li> Select the items that you want ("want it" column).
+		<li> Input the amount of gold you have. 
+		<li> Click the "start simulation" button and thats it! 
+		</ol>
+	</p>
+	<p>
+		When you click on any check box your selections are saved on a cookie.  When you come back, your selections are restored from the cookie.  Click the "clear saved checks" button to delete your cookie and then reload the page to start fresh.  In addition to a cookie, a link is created that saves your selections.  Bookmark this link to save that particular selection.
+	</p> 
   </div>
 
 </div>
@@ -338,51 +372,16 @@ Max boxes: <input type="number" id="maxBoxes" value="3500" size="10" style="widt
 </div>
 
 
-<div id="contactModal" class="modal">
+<div id="lootBoxOutputModal" class="modal">
   <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>
+    <span class="close" id="lboclose">&times;</span>
 
-	</p>
-  </div>
-
-</div>
-
-
-<p id='urlArea'></p>
-<!--
-<button onclick="updateCheckboxes('clearPageHave')">Clear "have it" on this page</button><br> 
-<button onclick="updateCheckboxes('clearPageWant')">Clear "want it" on this page</button><br> <br> 
-
-<button onclick="updateCheckboxes('checkPageHave')">Check "have it" on this page</button><br> 
-<button onclick="updateCheckboxes('checkPageWant')">Check "want it" on this page</button><br> <br> 
-
-<button onclick="clearCookie()">Clear all "have it"</button><br> 
-<button onclick="clearCookie()">Clear all "want it"</button><br> <br> 
-
-<button onclick="clearCookie()">Check all "have it"</button><br> 
-<button onclick="clearCookie()">Check all "want it"</button><br> <br> 
- <br>
--->
-   </div>
-   <div>
-	Wanted Commons: <span id='wantedCommons'></span><br>
-	Wanted Rares: <span id='wantedRares'></span><br>
-	Wanted Epics: <span id='wantedEpics'></span><br>
-	Wanted Legendaries: <span id='wantedLegs'></span><br>
-	Wanted Icons: <span id='wantedIcons'></span><br>
-	Total cost in gold: <span id='goldNeeded'></span><br>
-	<br>
-</div>
-
-<div id='goldAndButton'>
-	Current gold: <input type="number" id="userGold" value="0" size="10" style="width: 50px"><br><br>
-
-	<button onclick="startSimulating()">Start simulation</button>  <button onclick="startSimulating(1)" id='continueSimulation' style='display: none'>Continue simulation</button>  <br><br>
-</div>
-
-<div id='simResults' style='display: none; width: 500px;'>
-The results are in! On average, it took <b><span id='boxesNeededAvg'>0</span> boxes</b> to get the items you wanted. This is an average, and the actual amount it will take depends on RNGesus!  90 percent of simulations took <b><span id='boxesNeededRange'>0</span> boxes</b> to finish (with a median of <b><span id='boxesNeededMed'>0</span></b>).  The simulation ran for <b><span id='nIterationsOut'>0</span> iterations</b> and took <b><span id='timeTaken'>0</span> Seconds</b>!  <span id='postSimComment' style='color: red;'></span><br>
+	<div id='simResults'>
+The results are in! On average, it took <b><span id='boxesNeededAvg'>0</span> boxes</b> to get the items you wanted. 
+This is an average, and the actual amount it will take depends on RNGesus!  
+90 percent of simulations took <b><span id='boxesNeededRange'>0</span> boxes</b> to finish 
+(with a median of <b><span id='boxesNeededMed'>0</span></b>).  The simulation ran for <b><span id='nIterationsOut'>0</span> iterations</b> 
+and took <b><span id='timeTaken'>0</span> Seconds</b>!  <span id='postSimComment' style='color: red;'></span><br>
 <br>
    
 <br>
@@ -390,7 +389,22 @@ The results are in! On average, it took <b><span id='boxesNeededAvg'>0</span> bo
 </div>
 
 
-<div id="myDiv" style='width: 900px;'></div>
+<div id="myDiv"></div>
+
+	<br>
+	<button onclick="startSimulating(1)" id='continueSimulation'>Continue simulation</button>
+	
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
 
 <script src="item_output.js"></script>
 <script>
@@ -1085,7 +1099,7 @@ function hideContinueButton() {
 
 
 function outputStatistics(lootBoxesNeeded,timeTaken,iterations) {
-	document.getElementById('simResults').style.display = 'block';
+	document.getElementById('lootBoxOutputModal').style.display = 'block';
 	lootBoxesNeeded.sort(function(a, b){return a-b});
 	var sum=0;
 	for (var i=0;i<lootBoxesNeeded.length;i++){
@@ -1288,6 +1302,7 @@ var hmodal = document.getElementById('helpModal');
 var fmodal = document.getElementById('filtersModal');
 var omodal = document.getElementById('optionsModal');
 var smodal = document.getElementById('spendingModal');
+var lbomodal = document.getElementById('lootBoxOutputModal');
 
 // Get the button that opens the modal
 var hbtn = document.getElementById("hBtn");
@@ -1300,6 +1315,7 @@ var hspan = document.getElementById("hclose");
 var fspan = document.getElementById("fclose");
 var ospan = document.getElementById("oclose");
 var sspan = document.getElementById("sclose");
+var lbospan = document.getElementById("lboclose");
 
 // When the user clicks on the button, open the modal 
 hbtn.onclick = function() {
@@ -1332,6 +1348,9 @@ ospan.onclick = function() {
 sspan.onclick = function() {
     smodal.style.display = "none";
 }
+lbospan.onclick = function() {
+    lbomodal.style.display = "none";
+}
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -1346,6 +1365,9 @@ window.onclick = function(event) {
 		}
     if (event.target == smodal) {
         smodal.style.display = "none";
+		}
+    if (event.target == lbomodal) {
+        lbomodal.style.display = "none";
 		}
 }
 </script>
