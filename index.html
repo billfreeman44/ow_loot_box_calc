@@ -1020,7 +1020,7 @@ function runSimulation(haveArr,startGold,maxItems,spendingStr) {
 			itemNumber=getNewItemNumber(itemRarity);
 			if (haveArr.includes(itemNumber)) { //duplicate
 				if (itemRarity == 'common'){ startGold += 5;}
-				if (itemRarity == 'rare'){ startGold += 75;}
+				if (itemRarity == 'rare'){ startGold += 15;}
 				if (itemRarity == 'epic'){ startGold += 50;}
 				if (itemRarity == 'leg'){ startGold += 200;}
 			} else {//not a duplicate
